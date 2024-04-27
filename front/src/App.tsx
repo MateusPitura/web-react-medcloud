@@ -1,16 +1,22 @@
+import React from 'react';
 import './App.css';
+import ButtonPrimary from './components/ButtonPrimary.tsx';
 
 function App() {
   return (
     <div className='App'>
       <div className='App__container'>
-        <header>
-          <div>Patient Management</div>
-          <button>Add new patient</button>
+        <header className='App__header'>
+          <div className='App__headerTexts'>
+            <div className='App__headerTitle'>Patient Management</div>
+            <div className='App__headerButton'>
+              <ButtonPrimary title="Add new patient"/>
+            </div>
+          </div>
           <div className='App__divider'></div>
         </header>
-        <body>
-          <header>
+        <main className='App__main'>
+          <header className='App__contentHeader'>
             <div>ID</div>
             <div>Name</div>
             <div>Birthdate</div>
@@ -21,7 +27,7 @@ function App() {
               <button>Delete</button>
             </div>
           </header>
-          <body>
+          <main>
             <div>1</div>
             <div>Mateus Pitura</div>
             <div>19/02/2004</div>
@@ -31,8 +37,8 @@ function App() {
               <button>Edit</button>
               <button>Delete</button>
             </div>
-          </body>
-        </body>
+          </main>
+        </main>
       </div>
     </div>
   );
