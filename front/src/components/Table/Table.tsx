@@ -1,8 +1,6 @@
 import React from "react";
 import Field from "../Field/Field.tsx";
 import './Table.css'
-import EditButton from "../EditButton/EditButton.tsx";
-import DeleteButton from "../DeleteButton/DeleteButton.tsx";
 import TableRow from '../../components/TableRow/TableRow.tsx'
 import { tableRow } from "../../types/tableRow.ts";
 
