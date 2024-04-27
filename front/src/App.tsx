@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
-import ButtonPrimary from './components/ButtonPrimary.tsx';
+import ButtonPrimary from './components/ButtonPrimary/ButtonPrimary.tsx';
+import Table from './components/Table/Table.tsx';
 
 function App() {
   return (
@@ -15,30 +16,7 @@ function App() {
           </div>
           <div className='App__divider'></div>
         </header>
-        <main className='App__main'>
-          <header className='App__contentHeader'>
-            <div>ID</div>
-            <div>Name</div>
-            <div>Birthdate</div>
-            <div>E-mail</div>
-            <div>Address</div>
-            <div>
-              <button>Edit</button>
-              <button>Delete</button>
-            </div>
-          </header>
-          <main>
-            <div>1</div>
-            <div>Mateus Pitura</div>
-            <div>19/02/2004</div>
-            <div>mateus@gmail.com</div>
-            <div>Rua Jasmim, 124 - Contorno, Ponta Grossa - PR</div>
-            <div>
-              <button>Edit</button>
-              <button>Delete</button>
-            </div>
-          </main>
-        </main>
+        <Table/>
       </div>
     </div>
   );
