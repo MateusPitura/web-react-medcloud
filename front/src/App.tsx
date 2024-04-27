@@ -27,22 +27,24 @@ function App() {
             buttonText='SAVE'
             action={() => setIsModalVisible(false)}
           />
-          <Input
-            label='Name'
-            type='text'
-          />
-          <Input
-            label='Birthdate'
-            type='date'
-          />
-          <Input
-            label='Email'
-            type='email'
-          />
-          <Input
-            label='Address'
-            type='string'
-          />
+          <div className='App__modalContent'>
+            <Input
+              label='Name'
+              type='text'
+            />
+            <Input
+              label='Birthdate'
+              type='date'
+            />
+            <Input
+              label='Email'
+              type='email'
+            />
+            <Input
+              label='Address'
+              type='string'
+            />
+          </div>
         </Modal>
       </div>
     </div>
