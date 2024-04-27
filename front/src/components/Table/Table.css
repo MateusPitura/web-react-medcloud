@@ -1,6 +1,7 @@
 .Table {
     padding: 20px;
     display: grid;
-    grid-template-columns: 1fr repeat(5, 2fr);
+    /* Estou definindo 6 colunas, sendo a primeira menor por ser o ID */
+    grid-template-columns: 1fr repeat(5, 2fr); 
     grid-gap: 10px;
 }

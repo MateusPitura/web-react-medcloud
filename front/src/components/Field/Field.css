@@ -1,3 +1,13 @@
-.Field {
+.Field__default {
+    display: flex;
     padding: 5px;
+    align-items: center;
+}
+
+.Field__header{
+    display: flex;
+    padding: 5px;
+    align-items: center;
+    color: #1E5B82;
+    font-weight: bold;
 }
