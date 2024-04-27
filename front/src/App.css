@@ -1,8 +1,8 @@
-.App{
+.App {
   display: flex;
   height: '100%';
   /* Sem essa propriedade abaixo caso a tela seja rolável ficará uma faixa branca */
-  min-height: 100vh; 
+  min-height: 100vh;
   background-image: url("./assets/images/background-image.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -10,7 +10,7 @@
   align-items: flex-start;
 }
 
-.App__container{
+.App__container {
   background-color: white;
   padding: 50px;
   border-radius: 25px;
@@ -18,26 +18,11 @@
   margin-top: 50px;
 }
 
-.App__headerTexts{
-  display: flex;
-  flex: 1;
-  padding: 20px;
-}
-
-.App__headerTitle{
-  display: flex;
-  flex: 1;
-  font-size: 24px;
-  align-items: center;
-}
-
-.App__headerButton{
-  display: flex;
-  flex: 1;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.App__divider{
-  border: 1px solid #D6D3D1;
+.App__modal {
+  background-color: white;
+  margin: 200px;
+  max-width: 1000px;
+  padding: 50px;
+  border-radius: 25px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }

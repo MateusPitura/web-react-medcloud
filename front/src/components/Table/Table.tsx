@@ -81,28 +81,26 @@ const data = [
 
 const Table = () => {
     return (
-        <>
-            <main className='Table'>
-                <Field type="heaeder" title="ID" />
-                <Field type="heaeder" title="Name" />
-                <Field type="heaeder" title="Birthdate" />
-                <Field type="heaeder" title="Email" />
-                <Field type="heaeder" title="Address" />
-                <Field type="heaeder" title="Actions" />
-                {
-                    data.map((item: tableRow) => (
-                        <TableRow
-                            key={item.id}
-                            id={item.id}
-                            name={item.name}
-                            birthdate={item.birthdate}
-                            email={item.email}
-                            address={item.address}
-                        />
-                    ))
-                }
-            </main>
-        </>
+        <main className='Table'>
+            <Field type="heaeder" title="ID" />
+            <Field type="heaeder" title="Name" />
+            <Field type="heaeder" title="Birthdate" />
+            <Field type="heaeder" title="Email" />
+            <Field type="heaeder" title="Address" />
+            <Field type="heaeder" title="Actions" />
+            {
+                data.map((item: tableRow) => (
+                    <TableRow
+                        key={item.id}
+                        id={item.id}
+                        name={item.name}
+                        birthdate={item.birthdate}
+                        email={item.email}
+                        address={item.address}
+                    />
+                ))
+            }
+        </main>
     )
 }
 
