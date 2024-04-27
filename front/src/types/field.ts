@@ -1,4 +1,4 @@
 export type field = {
-    title: string,
-    type?: "heaeder" | undefined;
+    title: string | number,
+    type?: "heaeder";
 }
