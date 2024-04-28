@@ -180,8 +180,11 @@ function App() {
     }
   }
 
-  const handleSubmitDeletePatient = (id: number) => {
-    toastSucess("Patient deleted: " + id)
+  const handleSubmitDeletePatient = async (id: number) => {
+    await fetch(`http://localhost:8800/${id}`, {
+      method: "DELETE",
+    })
+    toastSucess(`Patient deleted`)
   }
 
   return (
