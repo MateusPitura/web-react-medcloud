@@ -12,11 +12,16 @@
 
 .Input__input {
     flex: 2;
-    border: none;
+    border: 1px solid #D6D3D1;
     background-color: #D6D3D1;
     caret-color: #1E5B82;
     font-size: 18px;
     padding: 10px;
     border-radius: 10px;
     outline: none;
+}
+
+.Input__false {
+    border: 1px solid #DC2626;
+    color: red;
 }

@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import './CustomModal.css'
 import Modal from 'react-modal';
 import Header from "../Header/Header.tsx";
@@ -14,7 +14,7 @@ const CustomModal = ({ isVisible, setIsVisible, onSubmit, title, buttonText, chi
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     onSubmit(event)
-    setIsVisible(false)
+    // setIsVisible(false)
   }
 
   return (

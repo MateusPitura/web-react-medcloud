@@ -3,4 +3,5 @@ export type inputType = {
     type: string,
     value?: string,
     onChange?: (e: string) => void
+    isValid: boolean
 }
