@@ -24,16 +24,11 @@ function App() {
   const [postalCode, setPostalCode] = useState<string>(' ');
   const [isPostalCodeValid, setIsPostalCodeValid] = useState<boolean>(true);
   const [street, setStreet] = useState<string>(' ');
-  const [isStreetValid, setIsStreetValid] = useState<boolean>(true);
   const [number, setNumber] = useState<string>(' ');
   const [isNumberValid, setIsNumberValid] = useState<boolean>(true)
   const [neighborhood, setNeighborhood] = useState<string>(' ');
-  const [isNeighborhoodValid, setIsNeighborhoodValid] = useState<boolean>(true);
   const [city, setCity] = useState<string>(' ');
-  const [isCityValid, setIsCityValid] = useState<boolean>(true)
   const [state, setState] = useState<string>(' ');
-  const [isStateValid, setIsStateValid] = useState<boolean>(true)
-
 
   //Ao se alterar o valor do editingData, o que ocorre ao clicar no botão 'edit', ele setta os states
   useEffect(() => {
@@ -48,20 +43,16 @@ function App() {
     setState(editingData?.state)
   }, [editingData])
 
-  //Ao fechar a modal ele reseta os valores dos validatores e será o CEP
+  //Ao fechar a modal ele reseta os valores dos validatores e dos dados sobre o endereço
   useEffect(() => {
     if (!isModalAddVisible && !isModalEditVisible) {
       setIsNameValid(true)
       setIsBirthdateValid(true)
       setIsEmailValid(true)
       setIsPostalCodeValid(true)
-      setIsStreetValid(true)
       setIsNumberValid(true)
-      setIsNeighborhoodValid(true)
-      setIsCityValid(true)
-      setIsStateValid(true)
       setPostalCode("")
-      setStreet(" ")
+      setStreet(" ") //Precisa ser espaço em branco para o value do input entender que ele existe
       setNumber("")
       setNeighborhood(" ")
       setCity(" ")
@@ -192,15 +183,15 @@ function App() {
           title='New Patient'
           buttonText='SAVE'
         >
-          <Input label='Name' type='text' isValid={isNameValid} isStatic={false} />
-          <Input label='Birthdate' type='date' isValid={isBirthdateValid} isStatic={false} />
-          <Input label='E-mail' type='text' isValid={isEmailValid} isStatic={false} />
-          <Input onChange={e => setPostalCode(e)} value={postalCode} label='Postal Code' type='text' isValid={isPostalCodeValid} isStatic={false} />
-          <Input label='Street' type='text' value={street} isValid={isStreetValid} isStatic={true} />
+          <Input label='Name' type='text' isValid={isNameValid} />
+          <Input label='Birthdate' type='date' isValid={isBirthdateValid} />
+          <Input label='E-mail' type='text' isValid={isEmailValid} />
+          <Input onChange={e => setPostalCode(e)} value={postalCode} label='Postal Code' type='text' isValid={isPostalCodeValid} />
+          <Input label='Street' type='text' value={street} isStatic={true} />
           <Input label='Number' type='text' isValid={isNumberValid} isStatic={false} />
-          <Input label='Neighborhood' type='text' value={neighborhood} isValid={isNeighborhoodValid} isStatic={true} />
-          <Input label='City' type='text' value={city} isValid={isCityValid} isStatic={true} />
-          <Input label='State' type='text' value={state} isValid={isStateValid} isStatic={true} />
+          <Input label='Neighborhood' type='text' value={neighborhood} isStatic={true} />
+          <Input label='City' type='text' value={city} isStatic={true} />
+          <Input label='State' type='text' value={state} isStatic={true} />
         </CustomModal>
         <CustomModal
           isVisible={isModalEditVisible}
@@ -209,15 +200,15 @@ function App() {
           title='Edit Patient'
           buttonText='SAVE CHANGES'
         >
-          <Input onChange={e => setName(e)} value={name} label='Name' type='text' isValid={isNameValid} isStatic={false} />
-          <Input onChange={e => setBirthdate(e)} value={birthdate} label='Birthdate' type='date' isValid={isBirthdateValid} isStatic={false} />
-          <Input onChange={e => setEmail(e)} value={email} label='E-mail' type='text' isValid={isEmailValid} isStatic={false} />
-          <Input onChange={e => setPostalCode(e)} value={postalCode} label='Postal Code' type='text' isValid={isPostalCodeValid} isStatic={false} />
-          <Input label='Street' type='text' value={street} isValid={isStreetValid} isStatic={true} />
-          <Input onChange={e => setNumber(e)} label='Number' type='text' value={number} isValid={isNumberValid} isStatic={false} />
-          <Input label='Neighborhood' type='text' value={neighborhood} isValid={isNeighborhoodValid} isStatic={true} />
-          <Input label='City' type='text' value={city} isValid={isCityValid} isStatic={true} />
-          <Input label='State' type='text' value={state} isValid={isStateValid} isStatic={true} />
+          <Input onChange={e => setName(e)} value={name} label='Name' type='text' isValid={isNameValid} />
+          <Input onChange={e => setBirthdate(e)} value={birthdate} label='Birthdate' type='date' isValid={isBirthdateValid} />
+          <Input onChange={e => setEmail(e)} value={email} label='E-mail' type='text' isValid={isEmailValid} />
+          <Input onChange={e => setPostalCode(e)} value={postalCode} label='Postal Code' type='text' isValid={isPostalCodeValid} />
+          <Input label='Street' type='text' value={street} isStatic={true} />
+          <Input onChange={e => setNumber(e)} label='Number' type='text' value={number} isValid={isNumberValid} />
+          <Input label='Neighborhood' type='text' value={neighborhood} isStatic={true} />
+          <Input label='City' type='text' value={city} isStatic={true} />
+          <Input label='State' type='text' value={state} isStatic={true} />
         </CustomModal>
         <ToastContainer />
       </div>

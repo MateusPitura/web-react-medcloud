@@ -3,6 +3,6 @@ export type inputType = {
     type: string,
     value?: string,
     onChange?: (e: string) => void
-    isValid: boolean
-    isStatic: boolean
+    isValid?: boolean
+    isStatic?: boolean
 }
