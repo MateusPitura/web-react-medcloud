@@ -1,5 +1,6 @@
 export type headerType = {
     title: string,
     buttonText: string,
-    action: () => void
+    action: () => void,
+    buttonType: 'primary' | 'secondary'
 }

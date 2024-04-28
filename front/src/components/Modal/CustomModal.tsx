@@ -3,6 +3,7 @@ import './CustomModal.css'
 import Modal from 'react-modal';
 import Header from "../Header/Header.tsx";
 import { customModalType } from '../../types/customModalType.ts'
+import Button from "../Button/Button.tsx";
 
 // O código abaixo é necessário para remover os warnings do console ao se usar a modal
 const rootElement = document.getElementById('root');
@@ -13,6 +14,7 @@ const CustomModal = ({ isVisible, setIsVisible, onSubmit, title, buttonText, chi
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     onSubmit(event)
+    setIsVisible(false)
   }
 
   return (
@@ -20,15 +22,16 @@ const CustomModal = ({ isVisible, setIsVisible, onSubmit, title, buttonText, chi
       isOpen={isVisible}
       className="Modal"
     >
-      <form onSubmit={event => handleOnSubmit(event)}>
-        <Header
-          title={title}
-          buttonText={buttonText}
-          action={() => setTimeout(() => setIsVisible(false), 10)}
-        />
-        <div className='Modal__content'>
-          {children}
-        </div>
+      <Header
+        title={title}
+        buttonText={"Cancel"}
+        buttonType="secondary"
+        action={() => setIsVisible(false)}
+      />
+      <form onSubmit={event => handleOnSubmit(event)} className='Modal__content'>
+        {children}
+        <br></br>
+        <Button onClick={() => {}} type={'primary'}>{buttonText}</Button>
       </form>
     </Modal>
   )

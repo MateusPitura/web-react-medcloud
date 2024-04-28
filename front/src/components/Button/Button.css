@@ -12,6 +12,15 @@
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
+.Button__secondary {
+    padding: 10px;
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+    color: #1E5B82;
+    font-size: 16px;
+}
+
 .Button__delete {
     margin: 5px;
     padding: 10px;

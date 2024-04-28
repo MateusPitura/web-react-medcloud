@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 export type buttonType = {
-    type: 'primary' | 'edit' | 'delete'
+    type: 'primary' | 'secondary' | 'edit' | 'delete'
     children: ReactNode
     onClick: () => void;
 }

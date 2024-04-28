@@ -2,7 +2,7 @@ import React from "react";
 import './Button.css';
 import { buttonType } from "../../types/buttonType";
 
-const ButtonPrimary = ({ type, onClick, children }: buttonType) => {
+const Button = ({ type, onClick, children }: buttonType) => {
     return (
         <button
             onClick={() => onClick()}
@@ -13,4 +13,4 @@ const ButtonPrimary = ({ type, onClick, children }: buttonType) => {
     )
 }
 
-export default ButtonPrimary;
+export default Button;

@@ -4,6 +4,7 @@ import Table from './components/Table/Table.tsx';
 import CustomModal from './components/Modal/CustomModal.tsx';
 import Header from './components/Header/Header.tsx';
 import Input from './components/Input/Input.tsx';
+import Button from './components/Button/Button.tsx';
 import { patientType } from './types/patientType.ts';
 import { ToastContainer } from 'react-toastify';
 import { toastSucess } from "./controller/ToastController.ts"
@@ -59,6 +60,7 @@ function App() {
         <Header
           title="Patient Management"
           buttonText='ADD NEW PATIENT'
+          buttonType='primary'
           action={() => setIsModalAddVisible(true)}
         />
         <Table
