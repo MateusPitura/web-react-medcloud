@@ -5,22 +5,7 @@ import TableRow from '../../components/TableRow/TableRow.tsx'
 import { patientType } from "../../types/patientType.ts";
 import { tableType } from '../../types/tableType.ts'
 
-const Table = ({ setModalVisible, setEditingData, onDelete }: tableType) => {
-
-    const [data, setData] = useState([]);
-
-    const fetchData = async () => {
-        try {
-            const dataFromServer = await fetch("http://localhost:8800")
-            const dataJson = await dataFromServer.json()
-            setData(dataJson)
-        } catch (err) {
-        }
-    }
-
-    useEffect(() => {
-        fetchData()
-    }, [])
+const Table = ({ setModalVisible, setEditingData, onDelete, data }: tableType) => {
 
     return (
         <main className='Table'>

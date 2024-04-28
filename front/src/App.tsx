@@ -14,6 +14,7 @@ function App() {
   const [isModalAddVisible, setIsModalAddVisible] = useState<boolean>(false);
   const [isModalEditVisible, setIsModalEditVisible] = useState<boolean>(false);
   //Os espaços em branco são necessário para indicar ao react que o componente é controlado e assim evitar uma mensagem do console
+  const [data, setData] = useState<patientType[]>([]);
   const [editingData, setEditingData] = useState<patientType>({ id: 1, name: ' ', birthdate: ' ', email: ' ', postalCode: ' ', street: ' ', number: ' ', neighborhood: ' ', city: ' ', state: ' ' });
   const [name, setName] = useState<string>(' ');
   const [isNameValid, setIsNameValid] = useState<boolean>(true);
@@ -59,6 +60,20 @@ function App() {
       setState(" ")
     }
   }, [isModalAddVisible, isModalEditVisible])
+
+  const fetchData = async () => {
+    try {
+      const dataFromServer = await fetch("http://localhost:8800")
+      const dataJson = await dataFromServer.json()
+      setData(dataJson)
+    } catch (err) {
+      toastError("Error in the server")
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   const fetchDataFromViaCEP = async () => {
     if (validatePostalCode(postalCode)) {
@@ -141,6 +156,7 @@ function App() {
         },
         body: JSON.stringify(newData)
       })
+      fetchData()
       toastSucess("Patient created")
       return true
     } catch (err) {
@@ -172,6 +188,7 @@ function App() {
         },
         body: JSON.stringify(newData)
       })
+      fetchData()
       toastSucess("Patient edited")
       return true
     } catch (err) {
@@ -181,10 +198,15 @@ function App() {
   }
 
   const handleSubmitDeletePatient = async (id: number) => {
-    await fetch(`http://localhost:8800/${id}`, {
-      method: "DELETE",
-    })
-    toastSucess(`Patient deleted`)
+    try {
+      await fetch(`http://localhost:8800/${id}`, {
+        method: "DELETE",
+      })
+      fetchData()
+      toastSucess(`Patient deleted`)
+    } catch (err) {
+      toastError("Error in the server")
+    }
   }
 
   return (
@@ -200,6 +222,7 @@ function App() {
           setModalVisible={setIsModalEditVisible}
           setEditingData={setEditingData}
           onDelete={handleSubmitDeletePatient}
+          data={data}
         />
         <CustomModal
           isVisible={isModalAddVisible}
