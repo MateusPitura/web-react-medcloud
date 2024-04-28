@@ -24,6 +24,7 @@ function App() {
   const [address, setAddress] = useState<string>(' ');
   const [isAddressValid, setIsAddressValid] = useState<boolean>(true);
 
+  //Ao se alterar o valor do editingData, o que ocorre ao clicar no botão 'edit', ele setta os states
   useEffect(() => {
     setName(editingData?.name)
     setBirthdate(editingData?.birthdate)
@@ -31,6 +32,7 @@ function App() {
     setAddress(editingData?.address)
   }, [editingData])
 
+  //Ao fechar a modal ele reseta os valores dos validatores
   useEffect(() => {
     setIsNameValid(true)
     setIsBirthdateValid(true)
@@ -62,11 +64,18 @@ function App() {
     if (!addressValid) {
       toastError("Invalid address")
     }
+
+    if(!nameValid || !birthdate || !emailValid || !addressValid){
+      return false
+    }
+    return true
   }
 
   const handleSubmitAddNewPatient = (event: React.FormEvent<HTMLFormElement>) => {
+    if(!validateInputs(event)){
+      return false
+    }
     toastSucess("Patient created")
-    validateInputs(event)
     const newData = {
       name: event.target[0].value,
       birthdate: event.target[1].value,
@@ -74,11 +83,14 @@ function App() {
       address: event.target[3].value
     }
     console.log(newData)
+    return true
   }
 
   const handleSubmitEditPatient = (event: React.FormEvent<HTMLFormElement>) => {
+    if(!validateInputs(event)){
+      return false
+    }
     toastSucess("Patient edited")
-    validateInputs(event)
     const newData = {
       name: event.target[0].value,
       birthdate: event.target[1].value,
@@ -86,6 +98,7 @@ function App() {
       address: event.target[3].value
     }
     console.log(editingData?.id, newData)
+    return true
   }
 
   const handleSubmitDeletePatient = (id: number) => {
@@ -115,8 +128,8 @@ function App() {
         >
           <Input label='Name' type='text' isValid={isNameValid} />
           <Input label='Birthdate' type='date' isValid={isBirthdateValid} />
-          <Input label='E-mail' type='email' isValid={isEmailValid} />
-          <Input label='Address' type='string' isValid={isAddressValid} />
+          <Input label='E-mail' type='text' isValid={isEmailValid} />
+          <Input label='Address' type='text' isValid={isAddressValid} />
         </CustomModal>
         <CustomModal
           isVisible={isModalEditVisible}
@@ -127,8 +140,8 @@ function App() {
         >
           <Input onChange={e => setName(e)} value={name} label='Name' type='text' isValid={isNameValid} />
           <Input onChange={e => setBirthdate(e)} value={birthdate} label='Birthdate' type='date' isValid={isBirthdateValid} />
-          <Input onChange={e => setEmail(e)} value={email} label='E-mail' type='email' isValid={isEmailValid} />
-          <Input onChange={e => setAddress(e)} value={address} label='Address' type='string' isValid={isAddressValid} />
+          <Input onChange={e => setEmail(e)} value={email} label='E-mail' type='text' isValid={isEmailValid} />
+          <Input onChange={e => setAddress(e)} value={address} label='Address' type='text' isValid={isAddressValid} />
         </CustomModal>
         <ToastContainer />
       </div>

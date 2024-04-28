@@ -13,8 +13,9 @@ const CustomModal = ({ isVisible, setIsVisible, onSubmit, title, buttonText, chi
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    onSubmit(event)
-    // setIsVisible(false)
+    if(onSubmit(event)){
+      setIsVisible(false)
+    }
   }
 
   return (
