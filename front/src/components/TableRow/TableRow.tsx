@@ -13,7 +13,12 @@ const TableRow = ({ patient, setModalVisible, setEditingData, onDelete }: tableR
             name: patient.name,
             birthdate: patient.birthdate,
             email: patient.email,
-            address: patient.address
+            postalCode: patient.postalCode,
+            street: patient.street,
+            number: patient.number,
+            neighborhood: patient.neighborhood,
+            city: patient.city,
+            state: patient.state
         }
         setEditingData(data)
         setModalVisible(true)
@@ -29,7 +34,7 @@ const TableRow = ({ patient, setModalVisible, setEditingData, onDelete }: tableR
             <Field title={patient.name} />
             <Field title={patient.birthdate} />
             <Field title={patient.email} />
-            <Field title={patient.address} />
+            <Field title={patient.city} />
             <div>
                 <EditButton onClick={handleEditButton} type={'edit'}>
                     <img src={require("../../assets/icons/editIcon.svg").default} />

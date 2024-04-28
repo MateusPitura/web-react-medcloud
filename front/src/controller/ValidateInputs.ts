@@ -22,9 +22,17 @@ export const validateEmail = (email: string) => {
     return false
 }
 
-export const validateAddress = (address: string) => {
+export const validatePostalCode = (postalCode: string) => {
     const regex = /^[0-9]{8}$/
-    if(regex.test(address)){
+    if(regex.test(postalCode)){
+        return true
+    }
+    return false
+}
+
+export const validateNumber = (number: string) => {
+    const regex = /^\S.*$/
+    if(regex.test(number)){
         return true
     }
     return false
