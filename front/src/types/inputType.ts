@@ -1,4 +1,4 @@
-export type input = {
+export type inputType = {
     label: string,
     type: string,
     value?: string,

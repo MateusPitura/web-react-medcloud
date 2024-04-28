@@ -1,16 +1,16 @@
 import React from "react";
 import "./Header.css"
 import Divider from "../Divider/Divider.tsx";
-import ButtonPrimary from "../ButtonPrimary/ButtonPrimary.tsx";
-import { header } from '../../types/header.ts'
+import Button from "../Button/Button.tsx";
+import { headerType } from '../../types/headerType.ts'
 
-const Header = ({ title, buttonText, action }: header) => {
+const Header = ({ title, buttonText, action }: headerType) => {
     return (
         <div className='Header'>
             <div className='Header__content'>
                 <div className='Header__title'>{title}</div>
                 <div className='Header__button'>
-                    <ButtonPrimary onClick={() => action()} title={buttonText} />
+                    <Button onClick={() => action()} type="primary">{buttonText}</Button>
                 </div>
             </div>
             <Divider />
