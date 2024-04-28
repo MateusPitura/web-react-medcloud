@@ -1,7 +1,11 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import "./DeleteButton.css"
 
-const DeleteButton = ({children}: React.SVGProps<SVGSVGElement>) => {
+type DeleteButton = {
+    children: ReactNode
+}
+
+const DeleteButton = ({children}: DeleteButton) => {
     return (
         <>
             <button className='DeleteButton'>

@@ -1,7 +1,11 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import "./EditButton.css"
 
-const EditButton = ({children}: React.SVGProps<SVGSVGElement>) => {
+type EditButton = {
+    children: ReactNode
+}
+
+const EditButton = ({children}: EditButton) => {
     return (
         <>
             <button className='EditButton'>

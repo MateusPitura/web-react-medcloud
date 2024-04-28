@@ -2,7 +2,7 @@ import React from "react";
 import Field from "../Field/Field.tsx";
 import './Table.css'
 import TableRow from '../../components/TableRow/TableRow.tsx'
-import { tableRow } from "../../types/tableRow.ts";
+import { patient } from "../../types/patient.ts";
 
 const data = [
     {
@@ -77,7 +77,12 @@ const data = [
     },
 ];
 
-const Table = () => {
+type Table = {
+    setModalVisible: () => void
+    setEditingData: (a: patient) => void
+}
+
+const Table = ({setModalVisible, setEditingData}: Table) => {
     return (
         <main className='Table'>
             <Field type="heaeder" title="ID" />
@@ -87,14 +92,12 @@ const Table = () => {
             <Field type="heaeder" title="Address" />
             <Field type="heaeder" title="Actions" />
             {
-                data.map((item: tableRow) => (
+                data.map((item: patient) => (
                     <TableRow
                         key={item.id}
-                        id={item.id}
-                        name={item.name}
-                        birthdate={item.birthdate}
-                        email={item.email}
-                        address={item.address}
+                        patient={item}
+                        setModalVisible={setModalVisible}
+                        setEditingData={setEditingData}
                     />
                 ))
             }

@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import './App.css';
 import Table from './components/Table/Table.tsx';
-import Modal from 'react-modal';
+import CustomModal from './components/Modal/CustomModal.tsx';
 import Header from './components/Header/Header.tsx';
 import Input from './components/Input/Input.tsx';
+import { patient } from './types/patient.ts';
 
 function App() {
 
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [isModalAddVisible, setIsModalAddVisible] = useState<boolean>(false);
+  const [isModalEditVisible, setIsModalEditVisible] = useState<boolean>(false);
+  const [editingData, setEditingData] = useState<patient>();
 
   return (
     <div className='App'>
@@ -15,37 +18,34 @@ function App() {
         <Header
           title="Patient Management"
           buttonText='ADD NEW PATIENT'
-          action={() => setIsModalVisible(true)}
+          action={() => setIsModalAddVisible(true)}
         />
-        <Table />
-        <Modal
-          isOpen={isModalVisible}
-          className="App__modal"
+        <Table 
+          setModalVisible={()=>setIsModalEditVisible(true)}
+          setEditingData={setEditingData}
+        />
+        <CustomModal
+          isVisible={isModalAddVisible}
+          setIsVisible={setIsModalAddVisible}
+          title='New Patient'
+          buttonText='SAVE'
         >
-          <Header
-            title="New Patient"
-            buttonText='SAVE'
-            action={() => setIsModalVisible(false)}
-          />
-          <div className='App__modalContent'>
-            <Input
-              label='Name'
-              type='text'
-            />
-            <Input
-              label='Birthdate'
-              type='date'
-            />
-            <Input
-              label='Email'
-              type='email'
-            />
-            <Input
-              label='Address'
-              type='string'
-            />
-          </div>
-        </Modal>
+          <Input label='Name' type='text' />
+          <Input label='Birthdate' type='date' />
+          <Input label='Email' type='email' />
+          <Input label='Address' type='string' />
+        </CustomModal>
+        <CustomModal
+          isVisible={isModalEditVisible}
+          setIsVisible={setIsModalEditVisible}
+          title='Edit Patient'
+          buttonText='SAVE CHANGES'
+        >
+          <Input value={editingData?.name} label='Name' type='text' />
+          <Input value={editingData?.birthdate} label='Birthdate' type='date' />
+          <Input value={editingData?.email} label='Email' type='email' />
+          <Input value={editingData?.address} label='Address' type='string' />
+        </CustomModal>
       </div>
     </div>
   );

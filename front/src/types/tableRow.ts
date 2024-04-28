@@ -1,7 +1,7 @@
+import { patient } from './patient.ts'
+
 export type tableRow = {
-    id: number
-    name: string,
-    birthdate: string
-    email: string,
-    address: string
+    patient: patient,
+    setModalVisible: () => void,
+    setEditingData: (a: patient) => void,
 }
