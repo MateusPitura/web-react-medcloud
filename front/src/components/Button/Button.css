@@ -1,3 +1,7 @@
+.Button:hover {
+    cursor: pointer;
+}
+
 .Button__primary {
     padding: 10px;
     background-color: #1E5B82;
@@ -6,10 +10,6 @@
     color: white;
     font-size: 16px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-}
-
-.Button__primary:hover {
-    cursor: pointer;
 }
 
 .Button__delete {
@@ -23,10 +23,6 @@
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
-.Button__delete:hover {
-    cursor: pointer;
-}
-
 .Button__edit {
     margin: 5px;
     padding: 10px;
@@ -36,8 +32,4 @@
     color: white;
     font-size: 16px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-}
-
-.Button__edit:hover {
-    cursor: pointer;
 }

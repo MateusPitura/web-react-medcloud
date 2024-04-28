@@ -6,7 +6,7 @@ const ButtonPrimary = ({ type, onClick, children }: buttonType) => {
     return (
         <button
             onClick={() => onClick()}
-            className={`Button__${type}`}
+            className={`Button Button__${type}`}
         >
             {children}
         </button>
