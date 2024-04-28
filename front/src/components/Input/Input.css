@@ -21,7 +21,11 @@
     outline: none;
 }
 
-.Input__false {
+.Input__validfalse {
     border: 1px solid #DC2626;
     color: red;
+}
+
+.Input__statictrue {
+    opacity: 50%;
 }

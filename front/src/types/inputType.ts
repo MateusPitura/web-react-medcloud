@@ -4,4 +4,5 @@ export type inputType = {
     value?: string,
     onChange?: (e: string) => void
     isValid: boolean
+    isStatic: boolean
 }

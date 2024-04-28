@@ -31,8 +31,7 @@ export const validatePostalCode = (postalCode: string) => {
 }
 
 export const validateNumber = (number: string) => {
-    const regex = /^\S.*$/
-    if(regex.test(number)){
+    if(number){
         return true
     }
     return false

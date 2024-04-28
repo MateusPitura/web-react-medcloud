@@ -59,30 +59,30 @@ function App() {
       setIsNumberValid(true)
       setIsNeighborhoodValid(true)
       setIsCityValid(true)
-      setPostalCode("")
       setIsStateValid(true)
-      setStreet("")
-      setNeighborhood("")
-      setCity("")
-      setState("")
+      setPostalCode("")
+      setStreet(" ")
+      setNumber("")
+      setNeighborhood(" ")
+      setCity(" ")
+      setState(" ")
     }
   }, [isModalAddVisible, isModalEditVisible])
 
   const fetchDataFromViaCEP = async () => {
     if (validatePostalCode(postalCode)) {
       const dataFromViaCep = await fetch(`https://viacep.com.br/ws/${postalCode}/json/`)
-      if(dataFromViaCep.ok){
-        const dataJson = await dataFromViaCep.json()
-        setStreet(dataJson.logradouro)
-        setNeighborhood(dataJson.bairro)
-        setCity(dataJson.localidade)
-        setState(dataJson.uf)
-        alert('teste1')
-      } else {
+      const dataJson = await dataFromViaCep.json()
+      if (dataJson.erro == true) {
         setIsPostalCodeValid(false)
         toastError("Invalid postal code")
-        alert('teste1')
+        return
       }
+      setIsPostalCodeValid(true)
+      setStreet(dataJson.logradouro)
+      setNeighborhood(dataJson.bairro)
+      setCity(dataJson.localidade)
+      setState(dataJson.uf)
     }
   }
 
@@ -121,7 +121,7 @@ function App() {
       toastError("Invalid number")
     }
 
-    if (!nameValid || !birthdate || !emailValid || !postalCodeValid) {
+    if (!nameValid || !birthdate || !emailValid || !postalCodeValid || !numberValid) {
       return false
     }
     return true
@@ -192,15 +192,15 @@ function App() {
           title='New Patient'
           buttonText='SAVE'
         >
-          <Input label='Name' type='text' isValid={isNameValid} />
-          <Input label='Birthdate' type='date' isValid={isBirthdateValid} />
-          <Input label='E-mail' type='text' isValid={isEmailValid} />
-          <Input onChange={e => setPostalCode(e)} value={postalCode} label='Postal Code' type='text' isValid={isPostalCodeValid} />
-          <Input label='Number' type='text' isValid={isNumberValid} />
-          <Input label='Street' type='text' value={street} isValid={isStreetValid} />
-          <Input label='Neighborhood' type='text' value={neighborhood} isValid={isNeighborhoodValid} />
-          <Input label='City' type='text' value={city} isValid={isCityValid} />
-          <Input label='State' type='text' value={state} isValid={isStateValid} />
+          <Input label='Name' type='text' isValid={isNameValid} isStatic={false} />
+          <Input label='Birthdate' type='date' isValid={isBirthdateValid} isStatic={false} />
+          <Input label='E-mail' type='text' isValid={isEmailValid} isStatic={false} />
+          <Input onChange={e => setPostalCode(e)} value={postalCode} label='Postal Code' type='text' isValid={isPostalCodeValid} isStatic={false} />
+          <Input label='Street' type='text' value={street} isValid={isStreetValid} isStatic={true} />
+          <Input label='Number' type='text' isValid={isNumberValid} isStatic={false} />
+          <Input label='Neighborhood' type='text' value={neighborhood} isValid={isNeighborhoodValid} isStatic={true} />
+          <Input label='City' type='text' value={city} isValid={isCityValid} isStatic={true} />
+          <Input label='State' type='text' value={state} isValid={isStateValid} isStatic={true} />
         </CustomModal>
         <CustomModal
           isVisible={isModalEditVisible}
@@ -209,15 +209,15 @@ function App() {
           title='Edit Patient'
           buttonText='SAVE CHANGES'
         >
-          <Input onChange={e => setName(e)} value={name} label='Name' type='text' isValid={isNameValid} />
-          <Input onChange={e => setBirthdate(e)} value={birthdate} label='Birthdate' type='date' isValid={isBirthdateValid} />
-          <Input onChange={e => setEmail(e)} value={email} label='E-mail' type='text' isValid={isEmailValid} />
-          <Input onChange={e => setPostalCode(e)} value={postalCode} label='Postal Code' type='text' isValid={isPostalCodeValid} />
-          <Input label='Street' type='text' value={street} isValid={isStreetValid} />
-          <Input onChange={e => setNumber(e)} label='Number' type='text' value={number} isValid={isNumberValid} />
-          <Input label='Neighborhood' type='text' value={neighborhood} isValid={isNeighborhoodValid} />
-          <Input label='City' type='text' value={city} isValid={isCityValid} />
-          <Input label='State' type='text' value={state} isValid={isStateValid} />
+          <Input onChange={e => setName(e)} value={name} label='Name' type='text' isValid={isNameValid} isStatic={false} />
+          <Input onChange={e => setBirthdate(e)} value={birthdate} label='Birthdate' type='date' isValid={isBirthdateValid} isStatic={false} />
+          <Input onChange={e => setEmail(e)} value={email} label='E-mail' type='text' isValid={isEmailValid} isStatic={false} />
+          <Input onChange={e => setPostalCode(e)} value={postalCode} label='Postal Code' type='text' isValid={isPostalCodeValid} isStatic={false} />
+          <Input label='Street' type='text' value={street} isValid={isStreetValid} isStatic={true} />
+          <Input onChange={e => setNumber(e)} label='Number' type='text' value={number} isValid={isNumberValid} isStatic={false} />
+          <Input label='Neighborhood' type='text' value={neighborhood} isValid={isNeighborhoodValid} isStatic={true} />
+          <Input label='City' type='text' value={city} isValid={isCityValid} isStatic={true} />
+          <Input label='State' type='text' value={state} isValid={isStateValid} isStatic={true} />
         </CustomModal>
         <ToastContainer />
       </div>

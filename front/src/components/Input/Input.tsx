@@ -2,7 +2,8 @@ import React from "react";
 import "./Input.css"
 import { inputType } from '../../types/inputType.ts';
 
-const Input = ({label, type, value, onChange, isValid}: inputType) => {
+const Input = ({label, type, value, onChange, isValid, isStatic}: inputType) => {
+
     return (
         <div>
             <label className="Input">
@@ -10,7 +11,7 @@ const Input = ({label, type, value, onChange, isValid}: inputType) => {
                 <input
                     type={type}
                     value={value?value:undefined}
-                    className={`Input__input Input__${isValid}`}
+                    className={`Input__input Input__valid${isValid} Input__static${isStatic}`}
                     onChange={e =>
                         onChange ? //Se onChange existe
                         onChange(e.target.value) //Executa
