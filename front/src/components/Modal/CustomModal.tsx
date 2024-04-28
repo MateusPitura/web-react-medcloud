@@ -11,9 +11,9 @@ Modal.setAppElement(rootElement!);
 
 const CustomModal = ({ isVisible, setIsVisible, onSubmit, title, buttonText, children }: customModalType) => {
 
-  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if(onSubmit(event)){
+    if(await onSubmit(event)){
       setIsVisible(false)
     }
   }

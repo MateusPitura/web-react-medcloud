@@ -112,17 +112,16 @@ function App() {
       toastError("Invalid number")
     }
 
-    if (!nameValid || !birthdate || !emailValid || !postalCodeValid || !numberValid) {
+    if (!nameValid || !birthdateValid || !emailValid || !postalCodeValid || !numberValid) {
       return false
     }
     return true
   }
 
-  const handleSubmitAddNewPatient = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitAddNewPatient = async (event: React.FormEvent<HTMLFormElement>) => {
     if (!validateInputs(event)) {
       return false
     }
-    toastSucess("Patient created")
     const newData = {
       name: event.target[0].value,
       birthdate: event.target[1].value,
@@ -134,11 +133,23 @@ function App() {
       city: event.target[7].value,
       state: event.target[8].value
     }
-    console.log(newData)
-    return true
+    try {
+      await fetch("http://localhost:8800", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(newData)
+      })
+      toastSucess("Patient created")
+      return true
+    } catch (err) {
+      toastError("Error in the server")
+      return false
+    }
   }
 
-  const handleSubmitEditPatient = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitEditPatient = async (event: React.FormEvent<HTMLFormElement>) => {
     if (!validateInputs(event)) {
       return false
     }

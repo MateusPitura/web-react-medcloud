@@ -7,8 +7,9 @@ export const validateName = (name: string) => {
 }
 
 export const validateBirthdate = (birthdate: string) => {
+    const date = birthdate.split("T")
     const regex = /^\d{4}-\d{2}-\d{2}$/
-    if(regex.test(birthdate)){
+    if(regex.test(date[0])){
         return true
     }
     return false
