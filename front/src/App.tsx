@@ -81,14 +81,15 @@ function App() {
       const dataJson = await dataFromViaCep.json()
       if (dataJson.erro == true) {
         setIsPostalCodeValid(false)
-        toastError("Invalid postal code")
-        return
+        toastError("Postal code not exist")
+        return false
       }
       setIsPostalCodeValid(true)
       setStreet(dataJson.logradouro)
       setNeighborhood(dataJson.bairro)
       setCity(dataJson.localidade)
       setState(dataJson.uf)
+      return true
     }
   }
 
@@ -96,7 +97,7 @@ function App() {
     fetchDataFromViaCEP()
   }, [postalCode])
 
-  const validateInputs = (event: React.FormEvent<HTMLFormElement>) => {
+  const validateInputs = async (event: React.FormEvent<HTMLFormElement>) => {
     const nameValid = validateName(event.target[0].value)
     setIsNameValid(nameValid)
     if (!nameValid) {
@@ -115,11 +116,13 @@ function App() {
       toastError("Invalid email")
     }
 
-    const postalCodeValid = validatePostalCode(event.target[3].value)
+    const postalCodeValid = validatePostalCode(postalCode)
     setIsPostalCodeValid(postalCodeValid)
     if (!postalCodeValid) {
       toastError("Invalid postal code")
     }
+
+    const postalCodeNotExist = await fetchDataFromViaCEP()
 
     const numberValid = validateNumber(event.target[5].value)
     setIsNumberValid(numberValid)
@@ -127,14 +130,14 @@ function App() {
       toastError("Invalid number")
     }
 
-    if (!nameValid || !birthdateValid || !emailValid || !postalCodeValid || !numberValid) {
+    if (!nameValid || !birthdateValid || !emailValid || !postalCodeValid || !postalCodeNotExist || !numberValid) {
       return false
     }
     return true
   }
 
   const handleSubmitAddNewPatient = async (event: React.FormEvent<HTMLFormElement>) => {
-    if (!validateInputs(event)) {
+    if (!(await validateInputs(event))) {
       return false
     }
     const newData = {
