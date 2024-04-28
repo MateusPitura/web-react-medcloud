@@ -153,7 +153,6 @@ function App() {
     if (!validateInputs(event)) {
       return false
     }
-    toastSucess("Patient edited")
     const newData = {
       name: event.target[0].value,
       birthdate: event.target[1].value,
@@ -165,8 +164,20 @@ function App() {
       city: event.target[7].value,
       state: event.target[8].value
     }
-    console.log(editingData?.id, newData)
-    return true
+    try {
+      await fetch(`http://localhost:8800/${editingData?.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(newData)
+      })
+      toastSucess("Patient edited")
+      return true
+    } catch (err) {
+      toastError("Error in the server")
+      return false
+    }
   }
 
   const handleSubmitDeletePatient = (id: number) => {
