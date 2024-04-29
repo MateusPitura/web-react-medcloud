@@ -6,9 +6,10 @@ import Header from './components/Header/Header.tsx';
 import Input from './components/Input/Input.tsx';
 import { patientType } from './types/patientType.ts';
 import { ToastContainer } from 'react-toastify';
-import { toastSucess, toastError } from "./controller/ToastController.ts"
 import { readPatients, deletePatient, createPatient, updatePatient, fetchPostalCode } from './controller/FetchData.ts'
 import { validateName, validateBirthdate, validateEmail, validatePostalCode, validateNumber } from './controller/ValidateInputs.ts';
+import { toastError } from './controller/ToastController.ts';
+import { handleSubmitForm } from './controller/SubmitForm.ts';
 
 function App() {
 
@@ -62,19 +63,10 @@ function App() {
     }
   }, [isModalAddVisible, isModalEditVisible])
 
-  const listPatients = async () => {
-    setData(await readPatients())
-  }
-
-  //Chamado ao carregar a página pela primeira vez
-  useEffect(() => {
-    listPatients()
-  }, [])
-
   const fetchDataFromViaCEP = async () => {
     if (validatePostalCode(postalCode)) {
       const postalCodeData = await fetchPostalCode(postalCode)
-      if(!postalCodeData){
+      if (!postalCodeData) {
         setIsPostalCodeValid(false)
         return false
       }
@@ -91,38 +83,24 @@ function App() {
     fetchDataFromViaCEP()
   }, [postalCode])
 
-  const validateInputs = async (event: React.FormEvent<HTMLFormElement>) => {
-    const nameValid = validateName(event.target[0].value)
+  const validateInputs = async (patient: patientType) => {
+    const nameValid = validateName(patient.name)
     setIsNameValid(nameValid)
-    if (!nameValid) {
-      toastError("Invalid name")
-    }
 
-    const birthdateValid = validateBirthdate(event.target[1].value)
+    const birthdateValid = validateBirthdate(patient.birthdate)
     setIsBirthdateValid(birthdateValid)
-    if (!birthdateValid) {
-      toastError("Invalid birthdate")
-    }
 
-    const emailValid = validateEmail(event.target[2].value)
+    const emailValid = validateEmail(patient.email)
     setIsEmailValid(emailValid)
-    if (!emailValid) {
-      toastError("Invalid email")
-    }
 
-    const postalCodeValid = validatePostalCode(postalCode)
+    const postalCodeValid = validatePostalCode(patient.postalCode)
     setIsPostalCodeValid(postalCodeValid)
-    if (!postalCodeValid) {
-      toastError("Invalid postal code")
-    }
+    if (!postalCode) toastError("Invalid postal code")
 
     const postalCodeNotExist = await fetchDataFromViaCEP()
 
-    const numberValid = validateNumber(event.target[5].value)
+    const numberValid = validateNumber(patient.number)
     setIsNumberValid(numberValid)
-    if (!numberValid) {
-      toastError("Invalid number")
-    }
 
     if (!nameValid || !birthdateValid || !emailValid || !postalCodeValid || !postalCodeNotExist || !numberValid) {
       return false
@@ -130,22 +108,17 @@ function App() {
     return true
   }
 
+  const listPatients = async () => {
+    setData(await readPatients())
+  }
+
+  //Chamado ao carregar a página pela primeira vez
+  useEffect(() => {
+    listPatients()
+  }, [])
+
   const handleSubmitAddNewPatient = async (event: React.FormEvent<HTMLFormElement>) => {
-    if (!(await validateInputs(event))) {
-      return false
-    }
-    const newData: patientType = {
-      name: event.target[0].value,
-      birthdate: event.target[1].value,
-      email: event.target[2].value,
-      postalCode: event.target[3].value,
-      street: event.target[4].value,
-      number: event.target[5].value,
-      neighborhood: event.target[6].value,
-      city: event.target[7].value,
-      state: event.target[8].value
-    }
-    if (await createPatient(newData)) {
+    if (await handleSubmitForm(event, validateInputs, createPatient)) {
       listPatients()
       return true
     }
@@ -153,21 +126,7 @@ function App() {
   }
 
   const handleSubmitEditPatient = async (event: React.FormEvent<HTMLFormElement>) => {
-    if (!validateInputs(event)) {
-      return false
-    }
-    const newData = {
-      name: event.target[0].value,
-      birthdate: event.target[1].value,
-      email: event.target[2].value,
-      postalCode: event.target[3].value,
-      street: event.target[4].value,
-      number: event.target[5].value,
-      neighborhood: event.target[6].value,
-      city: event.target[7].value,
-      state: event.target[8].value
-    }
-    if (await updatePatient(newData, editingData?.id)) {
+    if (await handleSubmitForm(event, validateInputs, updatePatient, editingData?.id)) {
       listPatients()
       return true
     }
@@ -175,9 +134,7 @@ function App() {
   }
 
   const handleSubmitDeletePatient = async (id: number) => {
-    if (await deletePatient(id)) {
-      listPatients()
-    }
+    if (await deletePatient(id)) listPatients()
   }
 
   return (
