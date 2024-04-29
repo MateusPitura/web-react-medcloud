@@ -7,6 +7,7 @@ import Input from './components/Input/Input.tsx';
 import { patientType } from './types/patientType.ts';
 import { ToastContainer } from 'react-toastify';
 import { toastSucess, toastError } from "./controller/ToastController.ts"
+import { readPatients, deletePatient, createPatient, updatePatient, fetchPostalCode } from './controller/FetchData.ts'
 import { validateName, validateBirthdate, validateEmail, validatePostalCode, validateNumber } from './controller/ValidateInputs.ts';
 
 function App() {
@@ -61,34 +62,27 @@ function App() {
     }
   }, [isModalAddVisible, isModalEditVisible])
 
-  const fetchData = async () => {
-    try {
-      const dataFromServer = await fetch("http://localhost:8800")
-      const dataJson = await dataFromServer.json()
-      setData(dataJson)
-    } catch (err) {
-      toastError("Error in the server")
-    }
+  const listPatients = async () => {
+    setData(await readPatients())
   }
 
+  //Chamado ao carregar a página pela primeira vez
   useEffect(() => {
-    fetchData()
+    listPatients()
   }, [])
 
   const fetchDataFromViaCEP = async () => {
     if (validatePostalCode(postalCode)) {
-      const dataFromViaCep = await fetch(`https://viacep.com.br/ws/${postalCode}/json/`)
-      const dataJson = await dataFromViaCep.json()
-      if (dataJson.erro == true) {
+      const postalCodeData = await fetchPostalCode(postalCode)
+      if(!postalCodeData){
         setIsPostalCodeValid(false)
-        toastError("Postal code not exist")
         return false
       }
       setIsPostalCodeValid(true)
-      setStreet(dataJson.logradouro)
-      setNeighborhood(dataJson.bairro)
-      setCity(dataJson.localidade)
-      setState(dataJson.uf)
+      setStreet(postalCodeData.logradouro)
+      setNeighborhood(postalCodeData.bairro)
+      setCity(postalCodeData.localidade)
+      setState(postalCodeData.uf)
       return true
     }
   }
@@ -140,7 +134,7 @@ function App() {
     if (!(await validateInputs(event))) {
       return false
     }
-    const newData = {
+    const newData: patientType = {
       name: event.target[0].value,
       birthdate: event.target[1].value,
       email: event.target[2].value,
@@ -151,21 +145,11 @@ function App() {
       city: event.target[7].value,
       state: event.target[8].value
     }
-    try {
-      await fetch("http://localhost:8800", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(newData)
-      })
-      fetchData()
-      toastSucess("Patient created")
+    if (await createPatient(newData)) {
+      listPatients()
       return true
-    } catch (err) {
-      toastError("Error in the server")
-      return false
     }
+    return false
   }
 
   const handleSubmitEditPatient = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -183,32 +167,16 @@ function App() {
       city: event.target[7].value,
       state: event.target[8].value
     }
-    try {
-      await fetch(`http://localhost:8800/${editingData?.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(newData)
-      })
-      fetchData()
-      toastSucess("Patient edited")
+    if (await updatePatient(newData, editingData?.id)) {
+      listPatients()
       return true
-    } catch (err) {
-      toastError("Error in the server")
-      return false
     }
+    return false
   }
 
   const handleSubmitDeletePatient = async (id: number) => {
-    try {
-      await fetch(`http://localhost:8800/${id}`, {
-        method: "DELETE",
-      })
-      fetchData()
-      toastSucess(`Patient deleted`)
-    } catch (err) {
-      toastError("Error in the server")
+    if (await deletePatient(id)) {
+      listPatients()
     }
   }
 
