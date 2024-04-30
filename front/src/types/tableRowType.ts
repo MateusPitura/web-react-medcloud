@@ -3,6 +3,6 @@ import { patientType } from './patientType.ts'
 export type tableRowType = {
     patient: patientType,
     setModalVisible: (a: boolean) => void,
-    setEditingData: (a: patientType) => void,
-    onDelete: (a: string) => void
+    setCurrentId: (a?: string) => void,
+    onDelete: (a?: string) => void
 }

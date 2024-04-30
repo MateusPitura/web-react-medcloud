@@ -1,4 +1,4 @@
 export type fieldType = {
-    title: string,
+    title?: string,
     type?: "heaeder";
 }

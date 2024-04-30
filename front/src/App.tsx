@@ -7,7 +7,7 @@ import Input from './components/Input/Input.tsx';
 import Form from './components/Form/Form.tsx';
 import { patientType } from './types/patientType.ts';
 import { ToastContainer } from 'react-toastify';
-import { readPatients, deletePatient, createPatient, updatePatient, fetchPostalCode } from './controller/FetchData.ts'
+import { listAllPatients, deletePatient, createPatient, updatePatient, readPatient, fetchPostalCode } from './controller/FetchData.ts'
 import { validateName, validateBirthdate, validateEmail, validatePostalCode, validateNumber } from './controller/ValidateInputs.ts';
 import { toastError } from './controller/ToastController.ts';
 import { handleSubmitForm } from './controller/SubmitForm.ts';
@@ -16,38 +16,51 @@ function App() {
 
   const [isModalAddVisible, setIsModalAddVisible] = useState<boolean>(false);
   const [isModalEditVisible, setIsModalEditVisible] = useState<boolean>(false);
-  //Os espaços em branco são necessário para indicar ao react que o componente é controlado e assim evitar uma mensagem do console
+
   const [data, setData] = useState<patientType[]>([]);
-  const [editingData, setEditingData] = useState<patientType>({ id: ' ', name: ' ', birthdate: ' ', email: ' ', postalCode: ' ', street: ' ', number: ' ', neighborhood: ' ', city: ' ', state: ' ' });
-  const [name, setName] = useState<string>(' ');
+  const [currentId, setCurrentId] = useState<string>();
+
+  const [name, setName] = useState<string>("");
   const [isNameValid, setIsNameValid] = useState<boolean>(true);
-  const [birthdate, setBirthdate] = useState<string>(' ');
+
+  const [birthdate, setBirthdate] = useState<string>("");
   const [isBirthdateValid, setIsBirthdateValid] = useState<boolean>(true);
-  const [email, setEmail] = useState<string>(' ');
+
+  const [email, setEmail] = useState<string>("");
   const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
-  const [postalCode, setPostalCode] = useState<string>(' ');
+
+  const [postalCode, setPostalCode] = useState<string>("");
   const [isPostalCodeValid, setIsPostalCodeValid] = useState<boolean>(true);
-  const [street, setStreet] = useState<string>(' ');
-  const [number, setNumber] = useState<string>(' ');
+
+  const [number, setNumber] = useState<string>("");
   const [isNumberValid, setIsNumberValid] = useState<boolean>(true)
-  const [neighborhood, setNeighborhood] = useState<string>(' ');
-  const [city, setCity] = useState<string>(' ');
-  const [state, setState] = useState<string>(' ');
 
-  //Ao se alterar o valor do editingData, o que ocorre ao clicar no botão 'edit', ele setta os states
+  const [street, setStreet] = useState<string>("");
+  const [neighborhood, setNeighborhood] = useState<string>("");
+  const [city, setCity] = useState<string>("");
+  const [state, setState] = useState<string>("");
+
+  const getPatientData = async (currentId?: string) => {
+    const data = await readPatient(currentId)
+    setName(data?.name)
+    setBirthdate(data?.birthdate)
+    setEmail(data?.email)
+    setPostalCode(data?.postalCode)
+    setStreet(data?.street)
+    setNumber(data?.number)
+    setNeighborhood(data?.neighborhood)
+    setCity(data?.city)
+    setState(data?.state)
+  }
+
+  // Ao se alterar o valor do editingData, o que ocorre ao clicar no botão 'edit', ele setta os states
   useEffect(() => {
-    setName(editingData?.name)
-    setBirthdate(editingData?.birthdate)
-    setEmail(editingData?.email)
-    setPostalCode(editingData?.postalCode)
-    setStreet(editingData?.street)
-    setNumber(editingData?.number)
-    setNeighborhood(editingData?.neighborhood)
-    setCity(editingData?.city)
-    setState(editingData?.state)
-  }, [editingData])
+    if (currentId) {
+      getPatientData(currentId)
+    }
+  }, [currentId])
 
-  //Ao fechar a modal ele reseta os valores dos validatores e dos dados sobre o endereço
+  // Ao fechar a modal ele reseta os valores dos validatores, o id e os dados sobre o endereço
   useEffect(() => {
     if (!isModalAddVisible && !isModalEditVisible) {
       setIsNameValid(true)
@@ -55,12 +68,14 @@ function App() {
       setIsEmailValid(true)
       setIsPostalCodeValid(true)
       setIsNumberValid(true)
+
+      setCurrentId("")
       setPostalCode("")
-      setStreet(" ") //Precisa ser espaço em branco para o value do input entender que ele existe
+      setStreet("")
       setNumber("")
-      setNeighborhood(" ")
-      setCity(" ")
-      setState(" ")
+      setNeighborhood("")
+      setCity("")
+      setState("")
     }
   }, [isModalAddVisible, isModalEditVisible])
 
@@ -81,7 +96,7 @@ function App() {
   }
 
   useEffect(() => {
-    fetchDataFromViaCEP()
+    if(postalCode) fetchDataFromViaCEP()
   }, [postalCode])
 
   const validateInputs = async (patient: patientType) => {
@@ -96,7 +111,7 @@ function App() {
 
     const postalCodeValid = validatePostalCode(patient.postalCode)
     setIsPostalCodeValid(postalCodeValid)
-    if (!postalCode) toastError("Invalid postal code")
+    if (!postalCodeValid) toastError("Invalid postal code")
 
     const postalCodeNotExist = await fetchDataFromViaCEP()
 
@@ -111,7 +126,7 @@ function App() {
 
   const listPatients = () => {
     setTimeout(async () => {
-      setData(await readPatients())
+      setData(await listAllPatients())
     }, 100)
   }
 
@@ -130,7 +145,7 @@ function App() {
   }
 
   const handleSubmitEditPatient = async (event: React.FormEvent<HTMLFormElement>) => {
-    if (await handleSubmitForm(event, validateInputs, updatePatient, editingData?.id)) {
+    if (await handleSubmitForm(event, validateInputs, updatePatient, currentId)) {
       listPatients()
       setIsModalEditVisible(false)
       return true
@@ -138,7 +153,7 @@ function App() {
     return false
   }
 
-  const handleSubmitDeletePatient = async (id: string) => {
+  const handleSubmitDeletePatient = async (id?: string) => {
     if (await deletePatient(id)) listPatients()
   }
 
@@ -153,7 +168,7 @@ function App() {
         />
         <Table
           setModalVisible={setIsModalEditVisible}
-          setEditingData={setEditingData}
+          setCurrentId={setCurrentId}
           onDelete={handleSubmitDeletePatient}
           data={data}
         />

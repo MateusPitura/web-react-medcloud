@@ -1,9 +1,18 @@
 import { patientType } from "../types/patientType.ts"
 import { toastError, toastSucess } from "./ToastController.ts"
 
-export const readPatients = async () => {
+export const listAllPatients = async () => {
     try {
         const dataFromServer = await fetch("http://localhost:8800")
+        return await dataFromServer.json()
+    } catch (err) {
+        toastError("Unable to list, error in the server")
+    }
+}
+
+export const readPatient = async (id?: string) => {
+    try {
+        const dataFromServer = await fetch(`http://localhost:8800/${id}`)
         return await dataFromServer.json()
     } catch (err) {
         toastError("Unable to read, error in the server")
@@ -44,7 +53,7 @@ export const updatePatient = async (patient: patientType, id?: string) => {
     }
 }
 
-export const deletePatient = async (id: string) => {
+export const deletePatient = async (id?: string) => {
     try {
         await fetch(`http://localhost:8800/${id}`, {
             method: "DELETE",

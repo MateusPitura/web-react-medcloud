@@ -5,22 +5,10 @@ import EditButton from "../Button/Button.tsx";
 import DeleteButton from "../Button/Button.tsx";
 import { tableRowType } from "../../types/tableRowType.ts";
 
-const TableRow = ({ patient, setModalVisible, setEditingData, onDelete }: tableRowType) => {
+const TableRow = ({ patient, setModalVisible, setCurrentId, onDelete }: tableRowType) => {
 
     const handleEditButton = () => {
-        const data = {
-            id: patient.id,
-            name: patient.name,
-            birthdate: patient.birthdate,
-            email: patient.email,
-            postalCode: patient.postalCode,
-            street: patient.street,
-            number: patient.number,
-            neighborhood: patient.neighborhood,
-            city: patient.city,
-            state: patient.state
-        }
-        setEditingData(data)
+        setCurrentId(patient.id)
         setModalVisible(true)
     }
 
