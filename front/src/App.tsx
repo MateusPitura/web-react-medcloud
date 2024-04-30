@@ -138,7 +138,7 @@ function App() {
     return false
   }
 
-  const handleSubmitDeletePatient = async (id: number) => {
+  const handleSubmitDeletePatient = async (id: string) => {
     if (await deletePatient(id)) listPatients()
   }
 

@@ -44,7 +44,7 @@ export const updatePatient = async (patient: patientType, id?: string) => {
     }
 }
 
-export const deletePatient = async (id: number) => {
+export const deletePatient = async (id: string) => {
     try {
         await fetch(`http://localhost:8800/${id}`, {
             method: "DELETE",
