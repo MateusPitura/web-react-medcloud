@@ -27,7 +27,7 @@ export const createPatient = async (patient: patientType) => {
     }
 }
 
-export const updatePatient = async (patient: patientType, id?: number) => {
+export const updatePatient = async (patient: patientType, id?: string) => {
     try {
         await fetch(`http://localhost:8800/${id}`, {
             method: "PUT",

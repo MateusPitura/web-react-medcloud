@@ -1,5 +1,5 @@
 export type patientType = {
-    id?: number
+    id?: string
     name: string,
     birthdate: string
     email: string,

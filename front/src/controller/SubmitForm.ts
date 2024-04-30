@@ -3,8 +3,8 @@ import { patientType } from "../types/patientType"
 export const handleSubmitForm = async (
     event: React.FormEvent<HTMLFormElement>,
     validateInputs: (patient: patientType) => Promise<boolean>,
-    handleFunction: (patient: patientType, id?: number ) => Promise<boolean>,
-    id?: number 
+    handleFunction: (patient: patientType, id?: string ) => Promise<boolean>,
+    id?: string 
 ) => {
     const newData: patientType = {
         name: event.target[0].value,

@@ -17,7 +17,7 @@ function App() {
   const [isModalEditVisible, setIsModalEditVisible] = useState<boolean>(false);
   //Os espaços em branco são necessário para indicar ao react que o componente é controlado e assim evitar uma mensagem do console
   const [data, setData] = useState<patientType[]>([]);
-  const [editingData, setEditingData] = useState<patientType>({ id: 1, name: ' ', birthdate: ' ', email: ' ', postalCode: ' ', street: ' ', number: ' ', neighborhood: ' ', city: ' ', state: ' ' });
+  const [editingData, setEditingData] = useState<patientType>({ id: ' ', name: ' ', birthdate: ' ', email: ' ', postalCode: ' ', street: ' ', number: ' ', neighborhood: ' ', city: ' ', state: ' ' });
   const [name, setName] = useState<string>(' ');
   const [isNameValid, setIsNameValid] = useState<boolean>(true);
   const [birthdate, setBirthdate] = useState<string>(' ');
@@ -119,7 +119,7 @@ function App() {
 
   const handleSubmitAddNewPatient = async (event: React.FormEvent<HTMLFormElement>) => {
     if (await handleSubmitForm(event, validateInputs, createPatient)) {
-      listPatients()
+      setTimeout(()=>listPatients(), 10)
       return true
     }
     return false
