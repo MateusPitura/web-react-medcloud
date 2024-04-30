@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import Table from './components/Table/Table.tsx';
-import CustomModal from './components/Modal/CustomModal.tsx';
+import CustomModal from './components/CustomModal/CustomModal.tsx';
 import Header from './components/Header/Header.tsx';
 import Input from './components/Input/Input.tsx';
+import Form from './components/Form/Form.tsx';
 import { patientType } from './types/patientType.ts';
 import { ToastContainer } from 'react-toastify';
 import { readPatients, deletePatient, createPatient, updatePatient, fetchPostalCode } from './controller/FetchData.ts'
@@ -108,8 +109,10 @@ function App() {
     return true
   }
 
-  const listPatients = async () => {
-    setData(await readPatients())
+  const listPatients = () => {
+    setTimeout(async () => {
+      setData(await readPatients())
+    }, 100)
   }
 
   //Chamado ao carregar a página pela primeira vez
@@ -119,7 +122,8 @@ function App() {
 
   const handleSubmitAddNewPatient = async (event: React.FormEvent<HTMLFormElement>) => {
     if (await handleSubmitForm(event, validateInputs, createPatient)) {
-      setTimeout(()=>listPatients(), 10)
+      listPatients()
+      setIsModalAddVisible(false)
       return true
     }
     return false
@@ -128,6 +132,7 @@ function App() {
   const handleSubmitEditPatient = async (event: React.FormEvent<HTMLFormElement>) => {
     if (await handleSubmitForm(event, validateInputs, updatePatient, editingData?.id)) {
       listPatients()
+      setIsModalEditVisible(false)
       return true
     }
     return false
@@ -155,40 +160,46 @@ function App() {
         <CustomModal
           isVisible={isModalAddVisible}
           setIsVisible={setIsModalAddVisible}
-          onSubmit={handleSubmitAddNewPatient}
           title='New Patient'
-          buttonText='SAVE'
         >
-          <Input label='Name' type='text' isValid={isNameValid} />
-          <Input label='Birthdate' type='date' isValid={isBirthdateValid} />
-          <Input label='E-mail' type='text' isValid={isEmailValid} />
-          <Input onChange={e => setPostalCode(e)} value={postalCode} label='Postal Code' type='text' isValid={isPostalCodeValid} />
-          <Input label='Street' type='text' value={street} isStatic={true} />
-          <Input label='Number' type='text' isValid={isNumberValid} isStatic={false} />
-          <Input label='Neighborhood' type='text' value={neighborhood} isStatic={true} />
-          <Input label='City' type='text' value={city} isStatic={true} />
-          <Input label='State' type='text' value={state} isStatic={true} />
+          <Form
+            buttonText='SAVE'
+            onSubmit={handleSubmitAddNewPatient}
+          >
+            <Input label='Name' type='text' isValid={isNameValid} />
+            <Input label='Birthdate' type='date' isValid={isBirthdateValid} />
+            <Input label='E-mail' type='text' isValid={isEmailValid} />
+            <Input onChange={e => setPostalCode(e)} value={postalCode} label='Postal Code' type='text' isValid={isPostalCodeValid} />
+            <Input label='Street' type='text' value={street} isStatic={true} />
+            <Input label='Number' type='text' isValid={isNumberValid} isStatic={false} />
+            <Input label='Neighborhood' type='text' value={neighborhood} isStatic={true} />
+            <Input label='City' type='text' value={city} isStatic={true} />
+            <Input label='State' type='text' value={state} isStatic={true} />
+          </Form>
         </CustomModal>
         <CustomModal
           isVisible={isModalEditVisible}
           setIsVisible={setIsModalEditVisible}
-          onSubmit={handleSubmitEditPatient}
           title='Edit Patient'
-          buttonText='SAVE CHANGES'
         >
-          <Input onChange={e => setName(e)} value={name} label='Name' type='text' isValid={isNameValid} />
-          <Input onChange={e => setBirthdate(e)} value={birthdate} label='Birthdate' type='date' isValid={isBirthdateValid} />
-          <Input onChange={e => setEmail(e)} value={email} label='E-mail' type='text' isValid={isEmailValid} />
-          <Input onChange={e => setPostalCode(e)} value={postalCode} label='Postal Code' type='text' isValid={isPostalCodeValid} />
-          <Input label='Street' type='text' value={street} isStatic={true} />
-          <Input onChange={e => setNumber(e)} label='Number' type='text' value={number} isValid={isNumberValid} />
-          <Input label='Neighborhood' type='text' value={neighborhood} isStatic={true} />
-          <Input label='City' type='text' value={city} isStatic={true} />
-          <Input label='State' type='text' value={state} isStatic={true} />
+          <Form
+            onSubmit={handleSubmitEditPatient}
+            buttonText='SAVE CHANGES'
+          >
+            <Input onChange={e => setName(e)} value={name} label='Name' type='text' isValid={isNameValid} />
+            <Input onChange={e => setBirthdate(e)} value={birthdate} label='Birthdate' type='date' isValid={isBirthdateValid} />
+            <Input onChange={e => setEmail(e)} value={email} label='E-mail' type='text' isValid={isEmailValid} />
+            <Input onChange={e => setPostalCode(e)} value={postalCode} label='Postal Code' type='text' isValid={isPostalCodeValid} />
+            <Input label='Street' type='text' value={street} isStatic={true} />
+            <Input onChange={e => setNumber(e)} label='Number' type='text' value={number} isValid={isNumberValid} />
+            <Input label='Neighborhood' type='text' value={neighborhood} isStatic={true} />
+            <Input label='City' type='text' value={city} isStatic={true} />
+            <Input label='State' type='text' value={state} isStatic={true} />
+          </Form>
         </CustomModal>
         <ToastContainer />
       </div>
-    </div>
+    </div >
   );
 }
 

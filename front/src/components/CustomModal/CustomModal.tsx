@@ -9,14 +9,7 @@ import Button from "../Button/Button.tsx";
 const rootElement = document.getElementById('root');
 Modal.setAppElement(rootElement!);
 
-const CustomModal = ({ isVisible, setIsVisible, onSubmit, title, buttonText, children }: customModalType) => {
-
-  const handleOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    if(await onSubmit(event)){
-      setIsVisible(false)
-    }
-  }
+const CustomModal = ({ isVisible, setIsVisible, title, children }: customModalType) => {
 
   return (
     <Modal
@@ -29,11 +22,7 @@ const CustomModal = ({ isVisible, setIsVisible, onSubmit, title, buttonText, chi
         buttonType="secondary"
         action={() => setIsVisible(false)}
       />
-      <form onSubmit={event => handleOnSubmit(event)} className='Modal__content'>
-        {children}
-        <br></br>
-        <Button onClick={() => {}} type={'primary'}>{buttonText}</Button>
-      </form>
+      {children}
     </Modal>
   )
 }

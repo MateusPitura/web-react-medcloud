@@ -4,5 +4,5 @@ export type tableRowType = {
     patient: patientType,
     setModalVisible: (a: boolean) => void,
     setEditingData: (a: patientType) => void,
-    onDelete: (a: number) => void
+    onDelete: (a: string) => void
 }

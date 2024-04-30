@@ -11,7 +11,7 @@ const TableRow = ({ patient, setModalVisible, setEditingData, onDelete }: tableR
         const data = {
             id: patient.id,
             name: patient.name,
-            birthdate: patient.birthdate.split("T")[0],
+            birthdate: patient.birthdate,
             email: patient.email,
             postalCode: patient.postalCode,
             street: patient.street,
@@ -32,7 +32,7 @@ const TableRow = ({ patient, setModalVisible, setEditingData, onDelete }: tableR
         <>
             <Field title={patient.id} />
             <Field title={patient.name} />
-            <Field title={patient.birthdate.split("T")[0]} />
+            <Field title={patient.birthdate} />
             <Field title={patient.email} />
             <Field title={patient.city} />
             <div>
