@@ -21,13 +21,17 @@ export const readPatient = async (id?: string) => {
 
 export const createPatient = async (patient: patientType) => {
     try {
-        await fetch("http://localhost:8800", {
+        const response = await fetch("http://localhost:8800", {
             method: "POST",
             headers: {
                 "Content-type": "application/json",
             },
             body: JSON.stringify(patient)
         })
+        if (response.status == 400) {
+            toastError("Unable to create, email already exists")
+            return false
+        }
         toastSucess("Patient created")
         return true
     } catch (err) {
@@ -38,13 +42,17 @@ export const createPatient = async (patient: patientType) => {
 
 export const updatePatient = async (patient: patientType, id?: string) => {
     try {
-        await fetch(`http://localhost:8800/${id}`, {
+        const response = await fetch(`http://localhost:8800/${id}`, {
             method: "PUT",
             headers: {
                 "Content-type": "application/json",
             },
             body: JSON.stringify(patient)
         })
+        if (response.status == 400) {
+            toastError("Unable to update, email already exists")
+            return false
+        }
         toastSucess("Patient edited")
         return true
     } catch (err) {

@@ -19,6 +19,14 @@ const db = admin.firestore()
 
 app.post("/", async (req, res) => {
     try {
+        const email = req.body.email;
+        const snapshot = await db.collection('patients').where("email", "==", email).get()
+        if(!snapshot.empty){
+            console.log("invalido")
+            res.status(400).send("Email already exists")
+            return
+        }
+
         const patientJson = {
             name: req.body.name,
             birthdate: req.body.birthdate,
@@ -66,9 +74,23 @@ app.get("/:id", async (req, res) => {
 
 app.put("/:id", async (req, res) => {
     try {
+        const patientEmailRef = await db.collection("patients").doc(req.params.id).get()
+        const email = req.body.email;
+
+        const patientEmailRefString = await patientEmailRef.data().email.toString()
+        const emailString = await email.toString()
+        
+        if(patientEmailRefString!=emailString){
+            const snapshot = await db.collection('patients').where("email", "==", email).get()
+            if(!snapshot.empty){
+                console.log("invalido")
+                res.status(400).send("Email already exists")
+                return
+            }
+        }
+
         const name = req.body.name
         const birthdate = req.body.birthdate
-        const email = req.body.email
         const postalCode = req.body.postalCode
         const street = req.body.street
         const number = req.body.number

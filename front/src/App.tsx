@@ -141,18 +141,14 @@ function App() {
     if (await handleSubmitForm(event, validateInputs, createPatient)) {
       listPatients()
       setIsModalAddVisible(false)
-      // return true
     }
-    // return false
   }
 
   const handleSubmitEditPatient = async (event: React.FormEvent<HTMLFormElement>) => {
     if (await handleSubmitForm(event, validateInputs, updatePatient, currentId)) {
       listPatients()
       setIsModalEditVisible(false)
-      // return true
     }
-    // return false
   }
 
   const handleSubmitDeletePatient = async () => {
