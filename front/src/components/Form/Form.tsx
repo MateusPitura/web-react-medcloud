@@ -1,12 +1,7 @@
 import React, { ReactNode } from "react"
 import Button from "../Button/Button.tsx"
 import "./Form.css"
-
-type formType = {
-    children: ReactNode
-    onSubmit: (a: React.FormEvent<HTMLFormElement>) => Promise<boolean>
-    buttonText: string
-}
+import { formType } from "../../types/formType.ts"
 
 const Form = ({ children, onSubmit, buttonText }: formType) => {
 

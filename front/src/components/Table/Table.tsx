@@ -5,7 +5,7 @@ import TableRow from '../../components/TableRow/TableRow.tsx'
 import { patientType } from "../../types/patientType.ts";
 import { tableType } from '../../types/tableType.ts'
 
-const Table = ({ setViewModalVisible, setEditModalVisible, setCurrentId, onDelete, data }: tableType) => {
+const Table = ({ setViewModalVisible, setEditModalVisible, setDeleteModalVisible, setCurrentId, data }: tableType) => {
 
     return (
         <main className='Table'>
@@ -22,8 +22,8 @@ const Table = ({ setViewModalVisible, setEditModalVisible, setCurrentId, onDelet
                         patient={item}
                         setViewModalVisible={setViewModalVisible}
                         setEditModalVisible={setEditModalVisible}
+                        setDeleteModalVisible={setDeleteModalVisible}
                         setCurrentId={setCurrentId}
-                        onDelete={onDelete}
                     />
                 ))
             }

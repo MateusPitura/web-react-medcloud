@@ -17,6 +17,7 @@ function App() {
   const [isModalAddVisible, setIsModalAddVisible] = useState<boolean>(false);
   const [isModalEditVisible, setIsModalEditVisible] = useState<boolean>(false);
   const [isModalViewVisible, setIsModalViewVisible] = useState<boolean>(false);
+  const [isModalDeleteVisible, setIsModalDeleteVisible] = useState<boolean>(false);
 
   const [data, setData] = useState<patientType[]>([]);
   const [currentId, setCurrentId] = useState<string>();
@@ -140,22 +141,25 @@ function App() {
     if (await handleSubmitForm(event, validateInputs, createPatient)) {
       listPatients()
       setIsModalAddVisible(false)
-      return true
+      // return true
     }
-    return false
+    // return false
   }
 
   const handleSubmitEditPatient = async (event: React.FormEvent<HTMLFormElement>) => {
     if (await handleSubmitForm(event, validateInputs, updatePatient, currentId)) {
       listPatients()
       setIsModalEditVisible(false)
-      return true
+      // return true
     }
-    return false
+    // return false
   }
 
-  const handleSubmitDeletePatient = async (id?: string) => {
-    if (await deletePatient(id)) listPatients()
+  const handleSubmitDeletePatient = async () => {
+    if (await deletePatient(currentId)){
+      listPatients()
+      setIsModalDeleteVisible(false)
+    }
   }
 
   return (
@@ -170,8 +174,8 @@ function App() {
         <Table
           setEditModalVisible={setIsModalEditVisible}
           setViewModalVisible={setIsModalViewVisible}
+          setDeleteModalVisible={setIsModalDeleteVisible}
           setCurrentId={setCurrentId}
-          onDelete={handleSubmitDeletePatient}
           data={data}
         />
         <CustomModal
@@ -219,14 +223,28 @@ function App() {
           setIsVisible={setIsModalViewVisible}
           title='View Patient'
         >
-          <Input value={name} label='Name' type='text'/>
-          <Input value={birthdate} label='Birthdate' type='date'/>
-          <Input value={email} label='E-mail' type='text'/>
-          <Input value={postalCode} label='Postal Code' type='text'/>
+          <Input value={name} label='Name' type='text' />
+          <Input value={birthdate} label='Birthdate' type='date' />
+          <Input value={email} label='E-mail' type='text' />
+          <Input value={postalCode} label='Postal Code' type='text' />
           <Input label='Street' type='text' value={street} isStatic={true} />
-          <Input label='Number' type='text' value={number}/>
+          <Input label='Number' type='text' value={number} />
           <Input label='Neighborhood' type='text' value={neighborhood} isStatic={true} />
           <Input label='City' type='text' value={city} isStatic={true} />
+        </CustomModal>
+        <CustomModal
+          isVisible={isModalDeleteVisible}
+          setIsVisible={setIsModalDeleteVisible}
+          title='Delete patient?'
+        >
+          <Form
+            onSubmit={handleSubmitDeletePatient}
+            buttonText='DELETE PATIENT'
+          >
+            <div className='App__text'>
+            Are you sure you want to delete "{name}"? This patient will be deleted immediately. You can't undo this action
+            </div>
+          </Form>
         </CustomModal>
         <ToastContainer />
       </div>

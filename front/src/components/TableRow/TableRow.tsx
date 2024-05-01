@@ -4,7 +4,7 @@ import Field from "../Field/Field.tsx";
 import Button from "../Button/Button.tsx";
 import { tableRowType } from "../../types/tableRowType.ts";
 
-const TableRow = ({ patient, setViewModalVisible, setEditModalVisible, setCurrentId, onDelete }: tableRowType) => {
+const TableRow = ({ patient, setViewModalVisible, setEditModalVisible, setDeleteModalVisible, setCurrentId }: tableRowType) => {
 
     const handleViewButton = () => {
         setCurrentId(patient.id)
@@ -17,7 +17,8 @@ const TableRow = ({ patient, setViewModalVisible, setEditModalVisible, setCurren
     }
 
     const handleDeleteButton = () => {
-        onDelete(patient.id)
+        setCurrentId(patient.id)
+        setDeleteModalVisible(true)
     }
 
     return (
