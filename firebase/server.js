@@ -54,15 +54,15 @@ app.get("/", async (req, res) => {
     }
 })
 
-// app.get("/:id", async (req, res) => {
-//     try {
-//         const patientRef = db.collection("patients").doc(req.params.id)
-//         const response = await patientRef.get();
-//         res.send(response.data())
-//     } catch (error) {
-//         res.send(error)
-//     }
-// })
+app.get("/:id", async (req, res) => {
+    try {
+        const patientRef = db.collection("patients").doc(req.params.id)
+        const response = await patientRef.get();
+        res.send(response.data())
+    } catch (error) {
+        res.send(error)
+    }
+})
 
 app.put("/:id", async (req, res) => {
     try {
