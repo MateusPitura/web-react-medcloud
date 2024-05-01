@@ -1,6 +1,5 @@
 .App {
   display: flex;
-  height: '100%';
   /* Sem essa propriedade abaixo caso a tela seja rolável ficará uma faixa branca */
   min-height: 100vh;
   background-image: url("./assets/images/background-image.jpg");
@@ -11,9 +10,20 @@
 }
 
 .App__container {
+  flex: 1;
   background-color: white;
   padding: 50px;
   border-radius: 25px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   margin: 50px;
+}
+
+@media(max-width: 1000px) {
+  .App__container {
+    padding: 0px 5px;
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
+    min-height: 100vh;
+  }
 }

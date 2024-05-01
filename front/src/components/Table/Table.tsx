@@ -5,22 +5,23 @@ import TableRow from '../../components/TableRow/TableRow.tsx'
 import { patientType } from "../../types/patientType.ts";
 import { tableType } from '../../types/tableType.ts'
 
-const Table = ({ setModalVisible, setCurrentId, onDelete, data }: tableType) => {
+const Table = ({ setViewModalVisible, setEditModalVisible, setCurrentId, onDelete, data }: tableType) => {
 
     return (
         <main className='Table'>
-            <Field type="heaeder" title="ID" />
-            <Field type="heaeder" title="Name" />
-            <Field type="heaeder" title="Birthdate" />
-            <Field type="heaeder" title="E-mail" />
-            <Field type="heaeder" title="City" />
-            <Field type="heaeder" title="Actions" />
+            <div className="Table__item"><Field type="heaeder" title="ID" /></div>
+            <div className="Table__item"><Field type="heaeder" title="Name" /></div>
+            <div className="Table__item"><Field type="heaeder" title="Birthdate" /></div>
+            <div className="Table__item"><Field type="heaeder" title="Email" /></div>
+            <div className="Table__item"><Field type="heaeder" title="City" /></div>
+            <div className="Table__item"><Field type="heaeder" title="" /></div>
             {
                 data?.map((item: patientType) => (
                     <TableRow
                         key={item.id}
                         patient={item}
-                        setModalVisible={setModalVisible}
+                        setViewModalVisible={setViewModalVisible}
+                        setEditModalVisible={setEditModalVisible}
                         setCurrentId={setCurrentId}
                         onDelete={onDelete}
                     />

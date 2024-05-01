@@ -23,4 +23,4 @@ const Input = ({label, type, value, onChange, isValid, isStatic}: inputType) => 
     )
 }
 
-export default Input;
+export default Input

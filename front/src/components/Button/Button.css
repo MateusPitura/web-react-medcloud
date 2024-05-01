@@ -21,20 +21,9 @@
     font-size: 16px;
 }
 
-.Button__delete {
-    margin: 5px;
-    padding: 10px;
-    background-color: #DC2626;
-    border: none;
-    border-radius: 10px;
-    color: white;
-    font-size: 16px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-}
-
-.Button__edit {
-    margin: 5px;
-    padding: 10px;
+.Button__action {
+    margin: 0;
+    padding: 5px;
     background-color: white;
     border: none;
     border-radius: 10px;

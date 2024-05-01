@@ -3,7 +3,6 @@ import './CustomModal.css'
 import Modal from 'react-modal';
 import Header from "../Header/Header.tsx";
 import { customModalType } from '../../types/customModalType.ts'
-import Button from "../Button/Button.tsx";
 
 // O código abaixo é necessário para remover os warnings do console ao se usar a modal
 const rootElement = document.getElementById('root');
@@ -22,7 +21,9 @@ const CustomModal = ({ isVisible, setIsVisible, title, children }: customModalTy
         buttonType="secondary"
         action={() => setIsVisible(false)}
       />
-      {children}
+      <div className="Modal__content">
+        {children}
+      </div>
     </Modal>
   )
 }

@@ -16,9 +16,9 @@ const Form = ({ children, onSubmit, buttonText }: formType) => {
     }
 
     return (
-        <form onSubmit={event => handleOnSubmit(event)}>
+        <form onSubmit={event => handleOnSubmit(event)} className="Form">
             {children}
-            <div className="Form">
+            <div className="Form__button">
                 <Button onClick={() => { }} type={'primary'}>
                     {buttonText}
                 </Button>

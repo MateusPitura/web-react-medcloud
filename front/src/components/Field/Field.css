@@ -1,7 +1,9 @@
 .Field__default {
-    display: flex;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow:ellipsis;
     padding: 5px;
-    align-items: center;
+    white-space: nowrap;
 }
 
 .Field__header{

@@ -1,13 +1,19 @@
 .Input {
     padding: 10px;
     display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    max-width: 95vw;
 }
 
 .Input__label {
     padding-right: 10px;
+    padding-bottom: 10px;
     font-size: 18px;
     flex: 1;
-    align-self: center;
+    align-self: flex-start;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .Input__input {
@@ -19,6 +25,8 @@
     padding: 10px;
     border-radius: 10px;
     outline: none;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .Input__validfalse {
@@ -28,4 +36,10 @@
 
 .Input__statictrue {
     opacity: 50%;
+}
+
+@media (max-width: 1000px) {
+    .Input {
+        flex-direction: column;
+    }
 }

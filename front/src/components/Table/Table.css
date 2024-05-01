@@ -1,7 +1,26 @@
 .Table {
     padding: 20px;
     display: grid;
-    /* Estou definindo 6 colunas, sendo a primeira menor por ser o ID */
-    grid-template-columns: 1fr repeat(4, 2fr) 1fr; 
+    grid-template-columns: minmax(100px, 2fr) repeat(4, minmax(150px, 2fr)) minmax(100px, 1fr);
     grid-gap: 10px;
+}
+
+.Table__item{
+    display: flex;
+    align-items: center;
+}
+
+@media(max-width: 1000px) {
+    .Table {
+        grid-template-columns: minmax(100px, 1fr) minmax(100px, 2fr) minmax(100px, 1fr);
+        grid-gap: 10px;
+        padding: 20px 5px;
+    }
+
+    .Table__item:nth-child(6n+3),
+    .Table__item:nth-child(6n+4),
+    .Table__item:nth-child(6n+5)
+    {
+        display: none;
+    }
 }

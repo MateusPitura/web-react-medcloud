@@ -1,13 +1,28 @@
 .Modal {
     background-color: white;
-    margin: 10vh auto;
+    margin: 25px auto;
     min-width: 400px;
     max-width: 800px;
     padding: 50px;
     border-radius: 25px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    overflow-y: auto; /*Necessário para tornar a modal escrolável*/
+    max-height: calc(100vh - 10vh); /*Necessário para tornar a modal escrolável*/
 }
 
-.Modal__content {
+.Modal__content{
     padding-top: 25px;
+    margin-bottom: 50px;
+}
+
+@media (max-width: 1000px){
+    .Modal {
+        margin: 0;
+        padding: 5px;
+        max-width: 100vw;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0px;
+        box-shadow: none;
+    }
 }

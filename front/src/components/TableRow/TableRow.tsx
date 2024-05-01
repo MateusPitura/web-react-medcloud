@@ -1,15 +1,19 @@
 import React from "react";
 import './TableRow.css';
 import Field from "../Field/Field.tsx";
-import EditButton from "../Button/Button.tsx";
-import DeleteButton from "../Button/Button.tsx";
+import Button from "../Button/Button.tsx";
 import { tableRowType } from "../../types/tableRowType.ts";
 
-const TableRow = ({ patient, setModalVisible, setCurrentId, onDelete }: tableRowType) => {
+const TableRow = ({ patient, setViewModalVisible, setEditModalVisible, setCurrentId, onDelete }: tableRowType) => {
+
+    const handleViewButton = () => {
+        setCurrentId(patient.id)
+        setViewModalVisible(true)
+    }
 
     const handleEditButton = () => {
         setCurrentId(patient.id)
-        setModalVisible(true)
+        setEditModalVisible(true)
     }
 
     const handleDeleteButton = () => {
@@ -18,18 +22,21 @@ const TableRow = ({ patient, setModalVisible, setCurrentId, onDelete }: tableRow
 
     return (
         <>
-            <Field title={patient.id} />
-            <Field title={patient.name} />
-            <Field title={patient.birthdate} />
-            <Field title={patient.email} />
-            <Field title={patient.city} />
-            <div>
-                <EditButton onClick={handleEditButton} type={'edit'}>
+            <div className="Table__item"><Field title={patient.id} /></div>
+            <div className="Table__item"><Field title={patient.name} /></div>
+            <div className="Table__item"><Field title={patient.birthdate} /></div>
+            <div className="Table__item"><Field title={patient.email} /></div>
+            <div className="Table__item"><Field title={patient.city} /></div>
+            <div className="Table__item Table__button">
+                <Button onClick={handleViewButton} type={'action'}>
+                    <img src={require("../../assets/icons/viewIcon.svg").default} />
+                </Button>
+                <Button onClick={handleEditButton} type={'action'}>
                     <img src={require("../../assets/icons/editIcon.svg").default} />
-                </EditButton>
-                <DeleteButton onClick={handleDeleteButton} type={'delete'}>
+                </Button>
+                <Button onClick={handleDeleteButton} type={'action'}>
                     <img src={require("../../assets/icons/deleteIcon.svg").default} />
-                </DeleteButton>
+                </Button>
             </div>
         </>
     )

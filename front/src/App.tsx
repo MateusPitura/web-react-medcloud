@@ -16,6 +16,7 @@ function App() {
 
   const [isModalAddVisible, setIsModalAddVisible] = useState<boolean>(false);
   const [isModalEditVisible, setIsModalEditVisible] = useState<boolean>(false);
+  const [isModalViewVisible, setIsModalViewVisible] = useState<boolean>(false);
 
   const [data, setData] = useState<patientType[]>([]);
   const [currentId, setCurrentId] = useState<string>();
@@ -62,7 +63,7 @@ function App() {
 
   // Ao fechar a modal ele reseta os valores dos validatores, o id e os dados sobre o endereço
   useEffect(() => {
-    if (!isModalAddVisible && !isModalEditVisible) {
+    if (!isModalAddVisible && !isModalEditVisible && !isModalViewVisible) {
       setIsNameValid(true)
       setIsBirthdateValid(true)
       setIsEmailValid(true)
@@ -77,7 +78,7 @@ function App() {
       setCity("")
       setState("")
     }
-  }, [isModalAddVisible, isModalEditVisible])
+  }, [isModalAddVisible, isModalEditVisible, isModalViewVisible])
 
   const fetchDataFromViaCEP = async () => {
     if (validatePostalCode(postalCode)) {
@@ -96,7 +97,7 @@ function App() {
   }
 
   useEffect(() => {
-    if(postalCode) fetchDataFromViaCEP()
+    if (postalCode) fetchDataFromViaCEP()
   }, [postalCode])
 
   const validateInputs = async (patient: patientType) => {
@@ -167,7 +168,8 @@ function App() {
           action={() => setIsModalAddVisible(true)}
         />
         <Table
-          setModalVisible={setIsModalEditVisible}
+          setEditModalVisible={setIsModalEditVisible}
+          setViewModalVisible={setIsModalViewVisible}
           setCurrentId={setCurrentId}
           onDelete={handleSubmitDeletePatient}
           data={data}
@@ -211,6 +213,20 @@ function App() {
             <Input label='City' type='text' value={city} isStatic={true} />
             <Input label='State' type='text' value={state} isStatic={true} />
           </Form>
+        </CustomModal>
+        <CustomModal
+          isVisible={isModalViewVisible}
+          setIsVisible={setIsModalViewVisible}
+          title='View Patient'
+        >
+          <Input value={name} label='Name' type='text'/>
+          <Input value={birthdate} label='Birthdate' type='date'/>
+          <Input value={email} label='E-mail' type='text'/>
+          <Input value={postalCode} label='Postal Code' type='text'/>
+          <Input label='Street' type='text' value={street} isStatic={true} />
+          <Input label='Number' type='text' value={number}/>
+          <Input label='Neighborhood' type='text' value={neighborhood} isStatic={true} />
+          <Input label='City' type='text' value={city} isStatic={true} />
         </CustomModal>
         <ToastContainer />
       </div>

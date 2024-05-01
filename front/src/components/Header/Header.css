@@ -17,3 +17,10 @@
     justify-content: flex-end;
     align-items: center;
 }
+
+@media (max-width: 1000px){
+    .Header{
+        padding-top: 25px;
+        max-width: 100vw;
+    }
+}
