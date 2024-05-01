@@ -19,6 +19,15 @@ export const readPatient = async (id?: string) => {
     }
 }
 
+export const searchPatient = async (searchText?: string) => {
+    try {
+        const dataFromServer = await fetch(`http://localhost:8800/patients?search=${searchText}`)
+        return await dataFromServer.json()
+    } catch (err) {
+        toastError("Unable to read, error in the server")
+    }
+}
+
 export const createPatient = async (patient: patientType) => {
     try {
         const response = await fetch("http://localhost:8800", {

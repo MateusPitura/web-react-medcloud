@@ -5,9 +5,10 @@ import CustomModal from './components/CustomModal/CustomModal.tsx';
 import Header from './components/Header/Header.tsx';
 import Input from './components/Input/Input.tsx';
 import Form from './components/Form/Form.tsx';
+import SearchBar from "./components/SearchBar/SearchBar.tsx"
 import { patientType } from './types/patientType.ts';
 import { ToastContainer } from 'react-toastify';
-import { listAllPatients, deletePatient, createPatient, updatePatient, readPatient, fetchPostalCode } from './controller/FetchData.ts'
+import { listAllPatients, deletePatient, createPatient, updatePatient, readPatient, fetchPostalCode, searchPatient } from './controller/FetchData.ts'
 import { validateName, validateBirthdate, validateEmail, validatePostalCode, validateNumber } from './controller/ValidateInputs.ts';
 import { toastError } from './controller/ToastController.ts';
 import { handleSubmitForm } from './controller/SubmitForm.ts';
@@ -101,6 +102,10 @@ function App() {
     if (postalCode) fetchDataFromViaCEP()
   }, [postalCode])
 
+  const onChangeSearchText = async (input: string) => {
+    setData(await searchPatient(input))
+  }
+
   const validateInputs = async (patient: patientType) => {
     const nameValid = validateName(patient.name)
     setIsNameValid(nameValid)
@@ -152,7 +157,7 @@ function App() {
   }
 
   const handleSubmitDeletePatient = async () => {
-    if (await deletePatient(currentId)){
+    if (await deletePatient(currentId)) {
       listPatients()
       setIsModalDeleteVisible(false)
     }
@@ -166,6 +171,9 @@ function App() {
           buttonText='ADD NEW PATIENT'
           buttonType='primary'
           action={() => setIsModalAddVisible(true)}
+        />
+        <SearchBar
+          onChangeText={onChangeSearchText}
         />
         <Table
           setEditModalVisible={setIsModalEditVisible}
@@ -238,7 +246,7 @@ function App() {
             buttonText='DELETE PATIENT'
           >
             <div className='App__text'>
-            Are you sure you want to delete "{name}"? This patient will be deleted immediately. You can't undo this action
+              Are you sure you want to delete "{name}"? This patient will be deleted immediately. You can't undo this action
             </div>
           </Form>
         </CustomModal>

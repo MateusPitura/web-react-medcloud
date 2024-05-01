@@ -1,5 +1,5 @@
 .Table {
-    padding: 20px;
+    padding: 10px;
     display: grid;
     grid-template-columns: minmax(100px, 2fr) repeat(4, minmax(150px, 2fr)) minmax(100px, 1fr);
     grid-gap: 10px;

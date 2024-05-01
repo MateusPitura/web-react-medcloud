@@ -62,6 +62,24 @@ app.get("/", async (req, res) => {
     }
 })
 
+app.get("/patients", async (req, res) => {
+    try {
+        const search = req.query.search;
+        const response = await db.collection('patients').where('name', '>=', search).where('name', '<=', search + '\uf8ff').get();
+
+        let responseArr = [];
+        response.forEach(doc => {
+            responseArr.push({
+                id: doc.id,
+                ...doc.data()
+            })
+        })
+        res.send(responseArr)
+    } catch (error) {
+        res.send(error)
+    }
+})
+
 app.get("/:id", async (req, res) => {
     try {
         const patientRef = db.collection("patients").doc(req.params.id)
@@ -79,7 +97,7 @@ app.put("/:id", async (req, res) => {
 
         const patientEmailRefString = await patientEmailRef.data().email.toString()
         const emailString = await email.toString()
-        
+
         if(patientEmailRefString!=emailString){
             const snapshot = await db.collection('patients').where("email", "==", email).get()
             if(!snapshot.empty){
