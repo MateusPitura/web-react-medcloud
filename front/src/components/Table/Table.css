@@ -10,6 +10,14 @@
     align-items: center;
 }
 
+.Table__pagination{
+    padding-top: 20px;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    margin: auto;
+}
+
 @media(max-width: 1000px) {
     .Table {
         grid-template-columns: minmax(100px, 1fr) minmax(100px, 2fr) minmax(100px, 1fr);

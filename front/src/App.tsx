@@ -8,7 +8,7 @@ import Form from './components/Form/Form.tsx';
 import SearchBar from "./components/SearchBar/SearchBar.tsx"
 import { patientType } from './types/patientType.ts';
 import { ToastContainer } from 'react-toastify';
-import { listAllPatients, deletePatient, createPatient, updatePatient, readPatient, fetchPostalCode } from './controller/FetchData.ts'
+import { listAllPatients, deletePatient, createPatient, updatePatient, readPatient, fetchPostalCode, getCountDocuments } from './controller/FetchData.ts'
 import { validateName, validateBirthdate, validateEmail, validatePostalCode, validateNumber } from './controller/ValidateInputs.ts';
 import { toastError } from './controller/ToastController.ts';
 import { handleSubmitForm } from './controller/SubmitForm.ts';
@@ -19,6 +19,9 @@ function App() {
   const [isModalEditVisible, setIsModalEditVisible] = useState<boolean>(false);
   const [isModalViewVisible, setIsModalViewVisible] = useState<boolean>(false);
   const [isModalDeleteVisible, setIsModalDeleteVisible] = useState<boolean>(false);
+
+  const [page, setPage] = useState<number>(1)
+  const [maxPages, setMaxPages] = useState<number>(1)
 
   const [data, setData] = useState<patientType[]>([]);
   const [currentId, setCurrentId] = useState<string>();
@@ -65,13 +68,14 @@ function App() {
 
   // Ao fechar a modal ele reseta os valores dos validatores, o id e os dados sobre o endereço
   useEffect(() => {
-    if (!isModalAddVisible && !isModalEditVisible && !isModalViewVisible) {
+    if (!isModalAddVisible && !isModalEditVisible && !isModalViewVisible && !isModalDeleteVisible) {
       setIsNameValid(true)
       setIsBirthdateValid(true)
       setIsEmailValid(true)
       setIsPostalCodeValid(true)
       setIsNumberValid(true)
 
+      setPage(1)
       setCurrentId("")
       setPostalCode("")
       setStreet("")
@@ -80,7 +84,7 @@ function App() {
       setCity("")
       setState("")
     }
-  }, [isModalAddVisible, isModalEditVisible, isModalViewVisible])
+  }, [isModalAddVisible, isModalEditVisible, isModalViewVisible, isModalDeleteVisible])
 
   const fetchDataFromViaCEP = async () => {
     if (validatePostalCode(postalCode)) {
@@ -131,14 +135,15 @@ function App() {
 
   const listPatients = () => {
     setTimeout(async () => {
-      setData(await listAllPatients())
+      setMaxPages(await getCountDocuments())
+      setData(await listAllPatients(page))
     }, 100)
   }
 
   //Chamado ao carregar a página pela primeira vez
   useEffect(() => {
     listPatients()
-  }, [])
+  }, [page])
 
   const handleSubmitAddNewPatient = async (event: React.FormEvent<HTMLFormElement>) => {
     if (await handleSubmitForm(event, validateInputs, createPatient)) {
@@ -178,6 +183,9 @@ function App() {
           setViewModalVisible={setIsModalViewVisible}
           setDeleteModalVisible={setIsModalDeleteVisible}
           setCurrentId={setCurrentId}
+          setPage={setPage}
+          page={page}
+          maxPages={maxPages}
           data={data}
         />
         <CustomModal

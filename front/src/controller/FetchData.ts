@@ -1,9 +1,16 @@
 import { patientType } from "../types/patientType.ts"
 import { toastError, toastSucess } from "./ToastController.ts"
 
-export const listAllPatients = async () => {
+export const getCountDocuments = async () => {
+    const maxPages = await fetch(`http://localhost:8800/`)
+    const response = await maxPages.json()
+    return response.documentsLenght
+}
+
+export const listAllPatients = async (page: number) => {
     try {
-        const dataFromServer = await fetch("http://localhost:8800")
+        getCountDocuments()
+        const dataFromServer = await fetch(`http://localhost:8800/patients?page=${page}`)
         return await dataFromServer.json()
     } catch (err) {
         toastError("Unable to list, error in the server")

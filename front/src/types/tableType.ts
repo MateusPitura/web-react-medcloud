@@ -5,5 +5,8 @@ export type tableType = {
     setEditModalVisible: (a: boolean) => void,
     setDeleteModalVisible: (a: boolean) => void,
     setCurrentId: (a?: string) => void
+    setPage: (a: number) => void
+    page?: number
+    maxPages?: number
     data: patientType[]
 }

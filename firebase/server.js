@@ -21,8 +21,7 @@ app.post("/", async (req, res) => {
     try {
         const email = req.body.email;
         const snapshot = await db.collection('patients').where("email", "==", email).get()
-        if(!snapshot.empty){
-            console.log("invalido")
+        if (!snapshot.empty) {
             res.status(400).send("Email already exists")
             return
         }
@@ -45,10 +44,47 @@ app.post("/", async (req, res) => {
     }
 })
 
+// app.get("/", async (req, res) => {
+//     try {
+//         const patientsRef = db.collection("patients")
+//         const response = await patientsRef.get();
+//         let responseArr = [];
+//         response.forEach(doc => {
+//             responseArr.push({
+//                 id: doc.id,
+//                 ...doc.data()
+//             })
+//         })
+//         res.send(responseArr)
+//     } catch (error) {
+//         res.send(error)
+//     }
+// })
+
+const elementsPerPage = 5
+
 app.get("/", async (req, res) => {
     try {
-        const patientsRef = db.collection("patients")
-        const response = await patientsRef.get();
+        const snapshot = await db.collection("patients").get()
+        const documentsLenght = Math.ceil(snapshot.size/elementsPerPage)
+        
+        const json = { documentsLenght }
+
+        res.send(json)
+    } catch (error) {
+        res.send(error)
+    }
+})
+
+app.get("/patients", async (req, res) => {
+    try {
+        const page = req.query.page;
+
+        const startAfter = (page - 1) * elementsPerPage
+
+        const query = db.collection('patients').orderBy('name').limit(elementsPerPage).offset(startAfter)
+        const response = await query.get()
+
         let responseArr = [];
         response.forEach(doc => {
             responseArr.push({
@@ -56,6 +92,7 @@ app.get("/", async (req, res) => {
                 ...doc.data()
             })
         })
+
         res.send(responseArr)
     } catch (error) {
         res.send(error)
@@ -98,10 +135,9 @@ app.put("/:id", async (req, res) => {
         const patientEmailRefString = await patientEmailRef.data().email.toString()
         const emailString = await email.toString()
 
-        if(patientEmailRefString!=emailString){
+        if (patientEmailRefString != emailString) {
             const snapshot = await db.collection('patients').where("email", "==", email).get()
-            if(!snapshot.empty){
-                console.log("invalido")
+            if (!snapshot.empty) {
                 res.status(400).send("Email already exists")
                 return
             }
