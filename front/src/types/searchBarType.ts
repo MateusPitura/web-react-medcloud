@@ -1,3 +1,5 @@
+import { patientType } from "./patientType"
+
 export type searchBarType = {
-    onChangeText: (a: string) => void
+    setData: (a: patientType[]) => void
 }

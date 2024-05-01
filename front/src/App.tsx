@@ -8,7 +8,7 @@ import Form from './components/Form/Form.tsx';
 import SearchBar from "./components/SearchBar/SearchBar.tsx"
 import { patientType } from './types/patientType.ts';
 import { ToastContainer } from 'react-toastify';
-import { listAllPatients, deletePatient, createPatient, updatePatient, readPatient, fetchPostalCode, searchPatient } from './controller/FetchData.ts'
+import { listAllPatients, deletePatient, createPatient, updatePatient, readPatient, fetchPostalCode } from './controller/FetchData.ts'
 import { validateName, validateBirthdate, validateEmail, validatePostalCode, validateNumber } from './controller/ValidateInputs.ts';
 import { toastError } from './controller/ToastController.ts';
 import { handleSubmitForm } from './controller/SubmitForm.ts';
@@ -102,9 +102,7 @@ function App() {
     if (postalCode) fetchDataFromViaCEP()
   }, [postalCode])
 
-  const onChangeSearchText = async (input: string) => {
-    setData(await searchPatient(input))
-  }
+
 
   const validateInputs = async (patient: patientType) => {
     const nameValid = validateName(patient.name)
@@ -173,7 +171,7 @@ function App() {
           action={() => setIsModalAddVisible(true)}
         />
         <SearchBar
-          onChangeText={onChangeSearchText}
+          setData={setData}
         />
         <Table
           setEditModalVisible={setIsModalEditVisible}
