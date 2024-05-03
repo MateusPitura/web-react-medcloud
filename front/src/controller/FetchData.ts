@@ -5,7 +5,7 @@ export const getCountDocuments = async () => {
     try{
         const maxPages = await fetch(`http://localhost:8800/`)
         const response = await maxPages.json()
-        return response.documentsLenght
+        return response.documentsLength
     } catch(err){
         toastError("Unable to read, error in the server")
     }
