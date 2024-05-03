@@ -37,7 +37,7 @@ https://github.com/MateusPitura/development-challenge-nine/assets/119008106/de1b
 
 **Para devs | cliente:** 
 
-1. Clone o repositório
+1. Clone o repositório e entre na pasta do client
 
 2. `npm install` 
 
@@ -45,7 +45,7 @@ https://github.com/MateusPitura/development-challenge-nine/assets/119008106/de1b
 
 **Para devs | servidor:** 
 
-1. Clone o repositório
+1. Clone o repositório e entre na pasta do server
 
 2. `npm install`
 
