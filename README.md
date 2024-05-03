@@ -27,9 +27,9 @@ Para alguns componentes, como o campo de busca e o controle da paginação, foi 
 
 :fire: **Firebase:** para a persistência dos dados foi usado o sistema de banco de dados Firestore, um recurso do Firebase, o qual é mantido pela Google 
 
-:mailbox_with_mail: **ViaCEP:** para a validação dos CEPs foi utilizado a API do ViaCEP 
-
 :page_with_curl: **Paginação:** os dados são carregados em páginas
+
+:mailbox_with_mail: **ViaCEP:** para a validação dos CEPs foi utilizado a API do ViaCEP 
 
 https://github.com/MateusPitura/development-challenge-nine/assets/119008106/de1bda45-19ab-47ba-b434-d59fb005c52c
 
