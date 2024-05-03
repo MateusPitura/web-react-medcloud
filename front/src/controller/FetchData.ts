@@ -2,9 +2,13 @@ import { patientType } from "../types/patientType.ts"
 import { toastError, toastSucess } from "./ToastController.ts"
 
 export const getCountDocuments = async () => {
-    const maxPages = await fetch(`http://localhost:8800/`)
-    const response = await maxPages.json()
-    return response.documentsLenght
+    try{
+        const maxPages = await fetch(`http://localhost:8800/`)
+        const response = await maxPages.json()
+        return response.documentsLenght
+    } catch(err){
+        toastError("Unable to read, error in the server")
+    }
 }
 
 export const listAllPatients = async (page: number) => {
@@ -28,8 +32,11 @@ export const readPatient = async (id?: string) => {
 
 export const searchPatient = async (searchText?: string) => {
     try {
-        const dataFromServer = await fetch(`http://localhost:8800/patients?search=${searchText}`)
-        return await dataFromServer.json()
+        if(searchText){
+            const dataFromServer = await fetch(`http://localhost:8800/query?search=${searchText}`)
+            return await dataFromServer.json()
+        }
+        return await listAllPatients(1)
     } catch (err) {
         toastError("Unable to read, error in the server")
     }

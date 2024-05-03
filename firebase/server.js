@@ -99,10 +99,11 @@ app.get("/patients", async (req, res) => {
     }
 })
 
-app.get("/patients", async (req, res) => {
+app.get("/query", async (req, res) => {
     try {
         const search = req.query.search;
-        const response = await db.collection('patients').where('name', '>=', search).where('name', '<=', search + '\uf8ff').get();
+        const query = db.collection('patients').where('name', '>=', search).where('name', '<=', search + '\uf8ff')
+        const response = await query.get()
 
         let responseArr = [];
         response.forEach(doc => {
