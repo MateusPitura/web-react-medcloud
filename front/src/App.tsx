@@ -58,15 +58,13 @@ function App() {
     setCity(data?.city)
     setState(data?.state)
   }
-
-  // Ao se alterar o valor do editingData, o que ocorre ao clicar no botão 'edit', ele setta os states
   useEffect(() => {
     if (currentId) {
       getPatientData(currentId)
     }
   }, [currentId])
 
-  // Ao fechar a modal ele reseta os valores dos validatores, o id e os dados sobre o endereço
+  // Ao fechar a modal ele reseta os valores
   useEffect(() => {
     if (!isModalAddVisible && !isModalEditVisible && !isModalViewVisible && !isModalDeleteVisible) {
       setIsNameValid(true)
