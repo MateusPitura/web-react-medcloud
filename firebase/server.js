@@ -66,9 +66,9 @@ const elementsPerPage = 5
 app.get("/", async (req, res) => {
     try {
         const snapshot = await db.collection("patients").get()
-        const documentsLenght = Math.ceil(snapshot.size/elementsPerPage)
+        const documentsLength = Math.ceil(snapshot.size/elementsPerPage)
         
-        const json = { documentsLenght }
+        const json = { documentsLength }
 
         res.send(json)
     } catch (error) {
