@@ -7,8 +7,6 @@
   <img src="https://img.shields.io/badge/Status-Closed-brightgreen" alt="Badge do status: fechado">  
 </p> 
 
-> :checkered_flag: Este projeto está finalizado :checkered_flag:  
-
 ## Descrição 
 
 Este sistema para gerenciamento de pacientes é uma aplicação cliente-servidor, na qual o cliente feito em React se comunica com o servidor desenvolvido em Node. Para persistência de dados foi utilizado o Firebase, da Google. A aplicação ainda
